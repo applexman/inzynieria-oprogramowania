@@ -5,3 +5,4 @@ Stronia internetowa przedstawiająca księgarnię internetową. Została ona zre
 * Dodać produkty w bazie danych.
 * Dodać tabelę Orders oraz OrderDetal
 * Dodać stronę pracownika
+* Dodać recenzję produktów
