@@ -28,7 +28,7 @@ session_start();
         while ($row = $result->fetch_assoc()) {
             $product[] = $row;
         }
-        ?>
+    ?>
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
@@ -50,15 +50,26 @@ session_start();
                                     Dodaj do koszyka
                                 </button>
                             </form>
+
                         </div>
                     </div>
                 </div>
+                <div class="fs-5 mb-5">
+                    <form action="add_review.php" method="POST">
+                        <label for="rev">
+                            Dodaj opinię
+                        </label><br>
+                        <input type='text' id="rev" /><br><br>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Dodaj opinię
+                        </button>
+                    </form>
+                </div>
             </div>
+
         </section>
-        <form>
-            <input type='text'/>
-    </form>
-        <?php
+    <?php
     }
     $connection->close();
     ?>
