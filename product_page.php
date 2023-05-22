@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +19,6 @@ session_start();
     <?php include 'navbar.php'; ?>
 
     <?php
-
     require_once "database_connect.php";
 
     $id = $_GET['id'];
@@ -30,38 +28,37 @@ session_start();
         while ($row = $result->fetch_assoc()) {
             $product[] = $row;
         }
-        echo
-        '<section class="py-5">
-                    <div class="container px-4 px-lg-5 my-5">
-                        <div class="row gx-4 gx-lg-5 align-items-center">
-                            <div class="col-md-6"><img class="rounded card-img-top mb-5 mb-md-0" src="assets/img/products/' . $product[0]['img'] . '" alt="' . $product[0]['name'] . '" /></div>
-                            <div class="col-md-6">
-                                <div class="small mb-1">ID: ' . $product[0]['id'] . '</div>
-                                <h1 class="display-5 fw-bolder">' . $product[0]['name'] . '</h1>
-                                <div class="fs-5 mb-5">
-                                    <span> ' . $product[0]['price'] . ' zł</span>
-                                </div>
-                                <p class="lead">' . $product[0]['description'] . '</p>
-                                <div class="d-flex">
-                                
-                                    <fieldset disabled>
-                                        <input class="form-control text-center me-3 disabled" id="inputQuantity" type="number" value="1" max="10" min="1" style="max-width: 5rem" />
-                                    </fieldset>
-                                    <a href="add_to_cart.php?id=' . $product[0]['id'] . '" class="btn btn-outline-dark flex-shrink-0" type="button">
-                                        <i class="bi-cart-fill me-1"></i>
-                                        Dodaj do koszyka
-                                    </a>
-                                </div>
-                            </div>
+        ?>
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img class="rounded card-img-top mb-5 mb-md-0" src="assets/img/products/<?php echo $product[0]['img']; ?>" alt="<?php echo $product[0]['name']; ?>" /></div>
+                    <div class="col-md-6">
+                        <h1 class="display-5 fw-bolder"><?php echo $product[0]['name']; ?></h1>
+                        <div class="fs-5 mb-5">
+                            <span><?php echo $product[0]['price']; ?> zł</span>
+                        </div>
+                        <p class="lead"><?php echo $product[0]['description']; ?></p>
+                        <div class="d-flex">
+                            <form action="add_to_cart.php" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $product[0]['id']; ?>">
+                                <fieldset>
+                                    <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="number" value="1" max="10" min="1" style="max-width: 5rem" />
+                                </fieldset>
+                                <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                    <i class="bi-cart-fill me-1"></i>
+                                    Dodaj do koszyka
+                                </button>
+                            </form>
                         </div>
                     </div>
-                </section>';
+                </div>
+            </div>
+        </section>
+        <?php
     }
     $connection->close();
-
     ?>
-
-
 
     <?php include 'footer.php'; ?>
     <script src="assets/js/jquery.min.js"></script>

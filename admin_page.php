@@ -80,7 +80,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                             <th scope="col">id#</th>
                             <th scope="col">User ID</th>
                             <th scope="col">Total</th>
-                            <th scope="col">Products ID's</th>
+                            <th scope="col">Name | Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,17 +99,39 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                             }
                             return $orders;
                         }
-
+                        function getOrdersDetail($connection)
+                        {
+                            $ordersD = array();
+                            $sql = "SELECT products.name AS productName, orderdetail.quantity AS quantity, orderdetail.idOrder FROM `products`, `orderdetail` WHERE products.id=orderdetail.idProduct";
+                            $result = $connection->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $ordersD[] = $row;
+                                }
+                            }
+                            return $ordersD;
+                        }
 
                         foreach (getOrders($connection) as $order) {
-                            echo
-                            '<tr>
-                                    <th scope="row">' . $order['id'] . '</th>
-                                    <td>' . $order['user_id'] . '</td>
-                                    <td>' . $order['total'] . '</td>
-                                    <td>' . $order['ordered_products'] . '</td>
-                                </tr>';
+                            echo '
+                            <tr>
+                                <th scope="row">' . $order['id'] . '</th>
+                                <td>' . $order['idUser'] . '</td>
+                                <td>' . $order['total'] . '</td>
+                                <td>';
+                        
+                            foreach (getOrdersDetail($connection) as $orderD) {
+                                if ($order['id'] == $orderD['idOrder']) {
+                                    echo '
+                                    <p>' . $orderD['productName'] . ' | ' . $orderD['quantity'] . '</p>';
+                                }
+                            }
+                        
+                            echo '
+                                </td>
+                            </tr>';
                         }
+                        
                         ?>
                     </tbody>
                 </table>
@@ -121,7 +143,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                         <tr>
                             <th scope="col">id#</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Admin</th>
+                            <th scope="col">Stopień uprawnień</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,7 +169,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                             '<tr>
                                     <th scope="row">' . $user['id'] . '</th>
                                     <td>' . $user['email'] . '</td>
-                                    <td>' . $user['isadmin'] . '</td>
+                                    <td>' . $user['permissions'] . '</td>
                                 </tr>';
                         }
                         ?>
