@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 26 Kwi 2023, 11:32
+-- Czas generowania: 22 Maj 2023, 14:18
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -35,6 +35,51 @@ CREATE TABLE `newsletter` (
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `orderdetail`
+--
+
+CREATE TABLE `orderdetail` (
+  `id` int(11) NOT NULL,
+  `idOrder` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `orderdetail`
+--
+
+INSERT INTO `orderdetail` (`id`, `idOrder`, `idProduct`, `quantity`) VALUES
+(1, 1, 2, 1),
+(2, 2, 2, 1),
+(3, 2, 1, 1),
+(4, 3, 2, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `orderDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `orders`
+--
+
+INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`) VALUES
+(1, 1, 25, '2023-05-22'),
+(2, 1, 45, '2023-05-22'),
+(3, 1, 100, '2023-05-22');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `products`
 --
 
@@ -45,6 +90,14 @@ CREATE TABLE `products` (
   `img` varchar(100) NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`) VALUES
+(1, 'Pan Tadeusz', 'Pan Tadeusz, czyli ostatni zajazd na Litwie – poemat epicki Adama Mickiewicza wydany w dwóch tomach w 1834 w Paryżu przez Aleksandra Jełowickiego. Ta epopeja narodowa powstała w latach 1832–1834 w Paryżu. Składa się z dwunastu ksiąg pisanych wierszem', '', 20),
+(2, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', '', 25);
 
 -- --------------------------------------------------------
 
@@ -77,6 +130,18 @@ ALTER TABLE `newsletter`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `orderdetail`
+--
+ALTER TABLE `orderdetail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `products`
 --
 ALTER TABLE `products`
@@ -99,10 +164,22 @@ ALTER TABLE `newsletter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT dla tabeli `orderdetail`
+--
+ALTER TABLE `orderdetail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT dla tabeli `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT dla tabeli `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`

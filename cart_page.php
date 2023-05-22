@@ -10,11 +10,6 @@ if (isset($_SESSION['alert_msg'])) {
     echo
     '<div class="alert alert-' . $_SESSION['alert_type'] . '" role="alert">' . $_SESSION['alert_msg'] . '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 }
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -26,8 +21,7 @@ if (isset($_SESSION['alert_msg'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Najlepszy sklep</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
 </head>
 
 <body>
@@ -46,12 +40,14 @@ if (isset($_SESSION['alert_msg'])) {
                         } else {
                             echo '<span class="h4">(' . count($_SESSION['cart']) . ' pozycje w koszyku)</span></p>';
 
-                            foreach ($_SESSION['cart'] as $product_id) {
+                            foreach ($_SESSION['cart'] as $product) {
+                                $product_id = $product['id'];
+                                $quantity = $product['quantity'];
                                 $sql = "SELECT * FROM products WHERE id = $product_id";
                                 $result = $connection->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        $_SESSION['total'] += $row['price'];
+                                        $_SESSION['total'] += $row['price']* $quantity;
                                         echo
                                         '<div class="card mb-4">
                                         <div class="card-body p-4">
@@ -71,13 +67,13 @@ if (isset($_SESSION['alert_msg'])) {
                                                 <div class="col-md-2 d-flex justify-content-center">
                                                     <div>
                                                         <p class="small text-muted mb-2 pb-3">Ilość</p>
-                                                        <p class="lead fw-normal mb-0">1</p>
+                                                        <p class="lead fw-normal mb-0">' . $quantity . '</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 d-flex justify-content-center">
                                                     <div>
                                                         <p class="small text-muted mb-2 pb-3">Cena</p>
-                                                        <p class="lead fw-normal mb-0">' . $row['price'] . ' zł</p>
+                                                        <p class="lead fw-normal mb-0">' . $row['price']*$quantity . ' zł</p>
                                                     </div>
                                                 </div>
                                                 
@@ -114,28 +110,21 @@ if (isset($_SESSION['alert_msg'])) {
                                     <div>
                                                 <a type="button" class="btn btn-danger btn-lg" href="unset_cart.php">
                                                     <i class="fas fa-trash"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                        </svg>Usuń kosz</i>
+                                                    </svg></i>
                                                 </a>
-                                    </div>
+                                            </div>
                             </div>';
                         }
-
                         ?>
-
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
-
-
-    <?php include 'footer.php'; ?>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/bold-and-bright.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
