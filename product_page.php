@@ -55,6 +55,9 @@ session_start();
                 </div>
             </div>
         </section>
+        <form>
+            <input type='text'/>
+    </form>
         <?php
     }
     $connection->close();
