@@ -13,6 +13,31 @@ session_start();
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.reflowhq.com/v2/toolkit.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .rating {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            flex-direction: row-reverse;
+        }
+
+        .rating input[type="radio"] {
+            display: none;
+        }
+
+        .rating label {
+            color: #ddd;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .rating input[type="radio"]:checked~label,
+        .rating input[type="radio"]:hover~label,
+        .rating input[type="radio"]:hover~label i {
+            color: gold;
+        }
+    </style>
 </head>
 
 <body>
@@ -54,19 +79,31 @@ session_start();
                         </div>
                     </div>
                 </div>
-                <div class="fs-5 mb-5">
-                    <form action="add_review.php" method="POST">
-                        <label for="rev">
-                            Dodaj opinię
-                        </label><br>
-                        <input type='text' id="rev" /><br><br>
-                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Dodaj opinię
-                        </button>
-                    </form>
+                <div class="row gx-4 gx-lg-5 align-items-center mt-4">
+                    <div class="col-md-6">
+                    <p class="lead" style="font-weight: bold;">Dodaj opinię o produkcie:</p>
+                        <form action="add_review.php" method="POST">
+                            <div class="form-group">
+                                <label>Ocena:</label><br>
+                                <div class="rating">
+                                    <input type="radio" id="star5" name="rating" value="5" required><label for="star5"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="star4" name="rating" value="4" required><label for="star4"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="star3" name="rating" value="3" required><label for="star3"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="star2" name="rating" value="2" required><label for="star2"><i class="fas fa-star"></i></label>
+                                    <input type="radio" id="star1" name="rating" value="1" required><label for="star1"><i class="fas fa-star"></i></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Komentarz:</label>
+                                <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
+                            </div>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                Dodaj opinię
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
         </section>
     <?php
