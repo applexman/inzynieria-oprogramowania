@@ -81,7 +81,7 @@ session_start();
                 </div>
                 <div class="row gx-4 gx-lg-5 align-items-center mt-4">
                     <div class="col-md-6">
-                    <p class="lead" style="font-weight: bold;">Dodaj opinię o produkcie:</p>
+                        <p class="lead" style="font-weight: bold;">Dodaj opinię o produkcie:</p>
                         <form action="add_review.php" method="POST">
                             <div class="form-group">
                                 <label>Ocena:</label><br>
