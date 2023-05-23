@@ -19,7 +19,7 @@ try {
         throw new Exception(mysqli_connect_errno());
     } else {
         $currentDate = date('Y-m-d');
-        if($connection->query("INSERT INTO orders VALUES (NULL, '{$_SESSION['id']}','{$_SESSION['total']}', '$currentDate')")){
+        if ($connection->query("INSERT INTO orders VALUES (NULL, '{$_SESSION['id']}','{$_SESSION['total']}', '$currentDate')")) {
             $orderId = $connection->insert_id;
             foreach ($_SESSION['cart'] as $key => $value) {
                 $product_id = $value['id'];
@@ -39,3 +39,4 @@ try {
     echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
     echo '<br />Informacja developerska: ' . $e;
 }
+?>
