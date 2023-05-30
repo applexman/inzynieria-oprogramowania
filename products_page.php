@@ -32,6 +32,7 @@ session_start();
 
                 <?php
                 require_once "database_connect.php";
+                require_once "review_rating_script.php";
 
                 function getProducts($connection)
                 {
@@ -48,18 +49,21 @@ session_start();
 
 
                 foreach (getProducts($connection) as $product) {
-                    echo
-                    '<div class="col mb-4">
-                                <div class="text-center">
-                                    <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
-                                    <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
-                                    <p class="text-muted mb-3">' . $product['description'] . '</p>
-                                    <a class="btn btn-primary shadow" role="button" 
-                                        href="product_page.php?id=' . $product['id'] . '">
-                                        ' . $product['price'] . ' zł 
-                                    </a>
-                                </div>
-                            </div>';
+                    $average_rating = calculateAverageRating($connection, $product['id']);
+                    echo '
+                    <div class="col mb-4">
+                        <div class="text-center">
+                            <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
+                            <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
+                    
+                            <p class="lead">Średnia ocena: <b>' . $average_rating . '</b></p>
+                            <p class="text-muted mb-3">' . $product['description'] . '</p>
+                            <a class="btn btn-primary shadow" role="button" href="product_page.php?id=' . $product['id'] . '">
+                                ' . $product['price'] . ' zł
+                            </a>
+                        </div>
+                    </div>';
+                    
                 }
 
                 $connection->close();

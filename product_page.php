@@ -14,30 +14,7 @@ session_start();
     <link rel="stylesheet" href="https://cdn.reflowhq.com/v2/toolkit.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        .rating {
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            flex-direction: row-reverse;
-        }
-
-        .rating input[type="radio"] {
-            display: none;
-        }
-
-        .rating label {
-            color: #ddd;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .rating input[type="radio"]:checked~label,
-        .rating input[type="radio"]:hover~label,
-        .rating input[type="radio"]:hover~label i {
-            color: gold;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -45,6 +22,7 @@ session_start();
 
     <?php
     require_once "database_connect.php";
+    require_once "review_rating_script.php";
 
     $id = $_GET['id'];
     $sql = "SELECT * FROM products WHERE id = $id";
@@ -64,6 +42,8 @@ session_start();
                             <span><?php echo $product[0]['price']; ?> zł</span>
                         </div>
                         <p class="lead"><?php echo $product[0]['description']; ?></p>
+                        <?php $average_rating = calculateAverageRating($connection, $product[0]['id']); ?>
+                        <p class="lead"><?php echo "Średnia ocena:<b> " . $average_rating ."</b>"; ?></p>
                         <div class="d-flex">
                             <form action="add_to_cart.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $product[0]['id']; ?>">
@@ -75,7 +55,6 @@ session_start();
                                     Dodaj do koszyka
                                 </button>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -83,6 +62,7 @@ session_start();
                     <div class="col-md-6">
                         <p class="lead" style="font-weight: bold;">Dodaj opinię o produkcie:</p>
                         <form action="add_review.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $product[0]['id']; ?>">
                             <div class="form-group">
                                 <label>Ocena:</label><br>
                                 <div class="rating">
@@ -104,7 +84,26 @@ session_start();
                         </form>
                     </div>
                 </div>
-
+                <div class="row gx-4 gx-lg-5 align-items-center mt-4">
+                    <div class="col-md-6">
+                        <h3>Recenzje:</h3>
+                        <?php
+                        $product_id = $product[0]['id'];
+                        $sql_reviews = "SELECT * FROM reviews WHERE idProduct = $product_id";
+                        $result_reviews = $connection->query($sql_reviews);
+                        if ($result_reviews->num_rows > 0) {
+                            while ($row_reviews = $result_reviews->fetch_assoc()) {
+                                echo "<div class='review-box'>";
+                                echo "<p>Ocena: " . $row_reviews['stars'] . "</p>";
+                                echo "<p>Komentarz: " . $row_reviews['review_text'] . "</p>";
+                                echo "</div>";
+                            }
+                        } else {
+                            echo "Brak recenzji";
+                        }
+                        ?>
+                    </div>
+                </div>
         </section>
     <?php
     }

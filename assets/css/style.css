@@ -1,0 +1,31 @@
+.rating {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    color: #ddd;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.rating input[type="radio"]:checked~label,
+.rating input[type="radio"]:hover~label,
+.rating input[type="radio"]:hover~label i {
+    color: gold;
+}
+
+.review-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
