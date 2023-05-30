@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 23 Maj 2023, 15:47
+-- Czas generowania: 30 Maj 2023, 13:52
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -114,6 +114,14 @@ CREATE TABLE `reviews` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+--
+-- Zrzut danych tabeli `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `idProduct`, `idUser`, `review_text`, `stars`, `date`) VALUES
+(1, 1, 1, 'Polecam', 5, '2023-05-30'),
+(2, 1, 1, 'Fajne', 4, '2023-05-30');
+
 -- --------------------------------------------------------
 
 --
@@ -206,7 +214,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT dla tabeli `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
