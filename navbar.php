@@ -14,12 +14,14 @@
             if (isset($_SESSION['permissions']) && $_SESSION['permissions'] == 1) {
                 echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="admin_page.php">Admin 🦸‍♂️</a>';
             }
-
+            if (isset($_SESSION['permissions']) && $_SESSION['permissions'] == 2) {
+                echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="employee_page.php">Pracownik 🦸‍♂️</a>';
+            }
             if (isset($_SESSION['logged_flag']) && $_SESSION['logged_flag'] == true) {
-                echo '<a class="btn btn-danger shadow" role="button" href="logout_script.php">Wyloguj 🚩</a>';
+                echo '<a class="btn btn-danger shadow me-2 btn-sm" role="button" href="logout_script.php">Wyloguj 🚩</a>';
                 echo '<a class="btn btn-outline-primary shadow ms-2 btn-sm" role="button" href="cart_page.php">Koszyk 🛒</a>';
             } else {
-                echo '<a class="btn btn-primary shadow" role="button" href="login_page.php">Zaloguj się</a>';
+                echo '<a class="btn btn-primary shadow me-2 btn-sm" role="button" href="login_page.php">Zaloguj się</a>';
             }
 
             ?>

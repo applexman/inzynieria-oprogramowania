@@ -35,9 +35,9 @@ if (isset($_SESSION['alert_msg'])) {
                 </div>
                 <div class="col-12 col-lg-10 mx-auto">
                     <div class="position-relative" style="display: flex;flex-wrap: wrap;justify-content: flex-end;">
-                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-15%, 35%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.8" src="assets/img/products/1.jpg"></div>
-                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-5%, 20%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.4" src="assets/img/products/1.jpg"></div>
-                        <div style="position: relative;flex: 0 0 60%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/1.jpg"></div>
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-15%, 35%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.8" src="assets/img/products/harry1.jpg"></div>
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-5%, 20%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.4" src="assets/img/products/lalka.jpg"></div>
+                        <div style="position: relative;flex: 0 0 60%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/spy1.jpg"></div>
                     </div>
                 </div>
             </div>
@@ -51,24 +51,24 @@ if (isset($_SESSION['alert_msg'])) {
                     <div class="col mb-4">
                         <div class="card bg-primary-light">
                             <div class="card-body text-center px-4 py-5 px-md-5">
-                                <p class="fw-bold text-primary card-text mb-2">Najlepsze kaktusy</p>
-                                <h5 class="fw-bold card-title mb-3">Nasze kaktusy zostały uznane za jedne z najlepszych do dekoracji wnętrz</h5><input class="btn btn-primary btn-sm" onclick="location.href='products_page.php'" type="button" value="Zobacz"></input>
+                                <p class="fw-bold text-primary card-text mb-2">Najlepsze fantasy</p>
+                                <h5 class="fw-bold card-title mb-3">Wybrane według naszej opinii książki fantasy</h5><input class="btn btn-primary btn-sm" onclick="location.href='products_page.php'" type="button" value="Zobacz"></input>
                             </div>
                         </div>
                     </div>
                     <div class="col mb-4">
                         <div class="card bg-secondary-light">
                             <div class="card-body text-center px-4 py-5 px-md-5">
-                                <p class="fw-bold text-secondary card-text mb-2">Super wiśnie</p>
-                                <h5 class="fw-bold card-title mb-3">Najlepsze z najlepszych wiśni w Polsce, niezapomniany smak</h5><input class="btn btn-primary btn-sm" onclick="location.href='products_page.php'" type="button" value="Zobacz"></input>
+                                <p class="fw-bold text-secondary card-text mb-2">Super powieści obyczajowe</p>
+                                <h5 class="fw-bold card-title mb-3">Najbardziej znane powieści obyczajowe</h5><input class="btn btn-primary btn-sm" onclick="location.href='products_page.php'" type="button" value="Zobacz"></input>
                             </div>
                         </div>
                     </div>
                     <div class="col mb-4">
                         <div class="card bg-info-light">
                             <div class="card-body text-center px-4 py-5 px-md-5">
-                                <p class="fw-bold text-info card-text mb-2">Najlepsze ananasy</p>
-                                <h5 class="fw-bold card-title mb-3">Niepowtarzalny smak ananasa w twoim domu</h5><input class="btn btn-primary btn-sm" onclick="location.href='products_page.php'" type="button" value="Zobacz"></input>
+                                <p class="fw-bold text-info card-text mb-2">Wiele innych</p>
+                                <h5 class="fw-bold card-title mb-3">Wiele innych tytułów</h5><input class="btn btn-primary btn-sm" onclick="location.href='products_page.php'" type="button" value="Zobacz"></input>
                             </div>
                         </div>
                     </div>

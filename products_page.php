@@ -21,7 +21,7 @@ session_start();
     require_once "database_connect.php";
     require_once "review_rating_script.php";
     ?>
-    
+
     <section class="py-5">
         <div class="container py-5">
             <div class="row mb-4 mb-lg-5">
