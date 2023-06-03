@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
+if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SESSION['permissions'] != 2)) {
     header('Location: login_page.php');
     exit();
 }
@@ -21,33 +21,57 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
 <body>
     <?php
     require_once 'navbar.php';
+    require_once "database_connect.php";
     ?>
     <section>
         <div class="container py-5">
             <div class="mx-auto" style="max-width: 900px;">
                 <div class="col-md-3 mb-4 mx-auto d-flex"><img class="rounded card-img-top mb-5 mb-md-0 " src="assets/img/products/default.png" alt="default image" /></div>
                 <form method="post">
-                    <div class="mb-3"><input class="form-control" type="text" name="name" placeholder="Nazwa"></div>
-                    <div class="mb-3"><input class="form-control" type="number" name="price" placeholder="Cena"></div>
-                    <textarea class="form-control" aria-label="With textarea" name="description" placeholder="Opis"></textarea>
+                    <div class="mb-3"><input class="form-control" type="text" name="name" placeholder="Nazwa" required></div>
+                    <div class="mb-3"><input class="form-control" type="number" name="price" min=1 placeholder="Cena" required></div>
+                    <textarea class="form-control" aria-label="With textarea" name="description" placeholder="Opis" required></textarea>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Kategoria</label>
+                        <select class="form-select" name="category" id="category">
+                            <?php
+                            $sql = "SELECT * FROM categories";
+                            $result = $connection->query($sql);
+                            $categories = array();
 
-                    <div class="m-3"><button class="btn btn-danger shadow d-block w-100" type="submit" name="confirm">Zatwierdź</button></div>
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $categories[] = $row;
+                                }
+                            }
+
+                            foreach ($categories as $category) {
+                                echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+                    <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
                 </form>
             </div>
         </div>
     </section>
-    }
     <?php
-    require_once "database_connect.php";
 
     if (isset($_POST['confirm'])) {
         $name = $_POST['name'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $sql = "INSERT INTO products (name, price, img, description) VALUES ('$name', '$price', 'default.png', '$description')";
+        $category = $_POST['category'];
+        $sql = "INSERT INTO products (name, price, img, description, categoryId) VALUES ('$name', '$price', 'default.png', '$description', '$category')";
         $result = $connection->query($sql);
         if ($result) {
-            header('Location: admin_page.php');
+            if ($_SESSION['permissions'] == 2) {
+                header('Location: employee_page.php');
+            } else {
+                header('Location: admin_page.php');
+            }
         }
     }
     $connection->close();

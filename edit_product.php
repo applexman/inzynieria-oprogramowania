@@ -1,10 +1,9 @@
 <?php
 session_start();
-if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
+if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SESSION['permissions'] != 2)) {
     header('Location: login_page.php');
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +31,16 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
         while ($row = $result->fetch_assoc()) {
             $product[] = $row;
         }
+
+        $sql = "SELECT * FROM categories";
+        $result = $connection->query($sql);
+        $categories = array();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row;
+            }
+        }
         echo
         '<section>
             <div class="container py-5">
@@ -40,11 +49,19 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                     <form method="POST">
                         <div class="mb-3"><input class="form-control" type="text" name="name" value="' . $product[0]['name'] . '"></div>
                         <div class="mb-3"><input class="form-control" type="number" name="price" value="' . $product[0]['price'] . '"></div>
-                        <textarea class="form-control" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea>
-
+                        <div class="mb-3"><textarea class="form-control" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea></div>
+                        <div class="mb-3">
+                            <select class="form-select" name="category" id="category">';
+                                foreach ($categories as $category) {
+                                    $selected = ($category['id'] == $product[0]['categoryId']) ? 'selected' : '';
+                                    echo '<option value="' . $category['id'] . '" ' . $selected . '>' . $category['name'] . '</option>';
+                                }
+                                echo
+                            '</select>
+                        </div>
                         <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="delete">Usuń</button></div>
-                        <div class="m-3"><button class="btn btn-outline-danger shadow d-block w-100" type="submit" name="confirm">Zatwierdź</button></div>
-                    </form>
+                        <div class="m-3"><button class="btn btn-outline-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
+                        </form>
                 </div>
             </div>
         </section>';
@@ -52,16 +69,27 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
     if (isset($_POST['delete'])) {
         $sql = "DELETE FROM products WHERE id = $id";
         $connection->query($sql);
-        header('Location: admin_page.php');
+        if($_SESSION['permissions'] == 2){
+            header('Location: employee_page.php');
+        }
+        else{
+            header('Location: admin_page.php');
+        }
     }
     if (isset($_POST['confirm'])) {
         $name = $_POST['name'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description' WHERE id = $id";
+        $categoryId = $_POST['category'];
+        $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description', categoryId = '$categoryId' WHERE id = $id";
         $result = $connection->query($sql);
         if ($result) {
-            header('Location: admin_page.php');
+            if($_SESSION['permissions'] == 2){
+                header('Location: employee_page.php');
+            }
+            else{
+                header('Location: admin_page.php');
+            }
         }
     }
     $connection->close();
