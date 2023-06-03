@@ -43,3 +43,4 @@ $cartQuantities = array_column($_SESSION['cart'], 'quantity');
 
 header('Location: product_page.php?id=' . $product);
 exit();
+?>
