@@ -89,19 +89,23 @@ session_start();
                             }
                         }
 
-                        foreach ($products as $product) {
-                            $average_rating = calculateAverageRating($connection, $product['id']);
-                            echo '
-                        <div class="col mb-4">
-                            <div class="text-center">
-                                <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
-                                <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
-                                <p class="lead">Średnia ocena: <b>' . $average_rating . '</b></p>
-                                <a class="btn btn-primary shadow" role="button" href="product_page.php?id=' . $product['id'] . '">
-                                    ' . $product['price'] . ' zł
-                                </a>
-                            </div>
-                        </div>';
+                        if (empty($products)) {
+                            echo '<p>Brak produktów w danej kategorii.</p>';
+                        } else {
+                            foreach ($products as $product) {
+                                $average_rating = calculateAverageRating($connection, $product['id']);
+                                echo '
+                                <div class="col mb-4">
+                                    <div class="text-center">
+                                        <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
+                                        <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
+                                        <p class="lead">Średnia ocena: <b>' . $average_rating . '</b></p>
+                                        <a class="btn btn-primary shadow" role="button" href="product_page.php?id=' . $product['id'] . '">
+                                            ' . $product['price'] . ' zł
+                                        </a>
+                                    </div>
+                                </div>';
+                            }
                         }
 
                         $connection->close();

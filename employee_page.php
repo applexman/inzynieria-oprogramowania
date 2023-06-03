@@ -23,59 +23,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
 
     <div class="container text-center">
         <div class="row">
-            <div class="col col-md-7">
-                <h2>Products</h2>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">id#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        require_once "database_connect.php";
-
-
-                        function getProducts($connection)
-                        {
-                            $products = array();
-                            $sql = "SELECT products.id, products.name, products.description, products.price, categories.name as categories
-                            FROM products, categories
-                            WHERE products.categoryId= categories.id
-                            ORDER BY products.id;";
-                            $result = $connection->query($sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $products[] = $row;
-                                }
-                            }
-                            return $products;
-                        }
-
-
-                        foreach (getProducts($connection) as $product) {
-                            echo
-                            '<tr>
-                                <th scope="row">' . $product['id'] . '</th>
-                                    <td>' . $product['name'] . '</td>
-                                    <td>' . $product['description'] . '</td>
-                                    <td>' . $product['price'] . ' zł</td>
-                                    <td>' . $product['categories'] . '</td>
-                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edit</a>
-                                </tr>';
-                        }
-
-                        ?>
-                        <tr><a class="btn btn-outline-info btn-sm" href="add_product.php">Dodaj produkt</a></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col col-md-5">
+        <div class="col col-md-12">
                 <h2>Orders</h2>
                 <table class="table table-striped table-hover table-sm">
                     <thead>
@@ -85,7 +33,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                             <th scope="col">Total</th>
                             <th scope="col">Name | Quantity</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Zmień status</th>
+                            <th scope="col">Change status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,7 +85,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                             echo '
                                 </td>
                                 <td>' . $order['status'] . '</td>
-                                <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="change_status_script.php?id=' . $order['id'] . '">Zmień</a>
+                                <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="change_status_script.php?id=' . $order['id'] . '">Change</a>
                             </tr>';
                         }
 
@@ -145,7 +93,97 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                     </tbody>
                 </table>
             </div>
-        </div>
+            <div class="col col-md-12">
+                <h2>Products</h2>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">id#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        require_once "database_connect.php";
+
+
+                        function getProducts($connection)
+                        {
+                            $products = array();
+                            $sql = "SELECT products.id, products.name, products.description, products.price, categories.name as categories
+                            FROM products, categories
+                            WHERE products.categoryId= categories.id
+                            ORDER BY products.id;";
+                            $result = $connection->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $products[] = $row;
+                                }
+                            }
+                            return $products;
+                        }
+
+
+                        foreach (getProducts($connection) as $product) {
+                            echo
+                            '<tr>
+                                <th scope="row">' . $product['id'] . '</th>
+                                    <td>' . $product['name'] . '</td>
+                                    <td>' . $product['description'] . '</td>
+                                    <td>' . $product['price'] . ' zł</td>
+                                    <td>' . $product['categories'] . '</td>
+                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edit</a>
+                                </tr>';
+                        }
+
+                        ?>
+                        <tr><a class="btn btn-outline-info btn-sm" href="add_product.php">Add product</a></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col col-md-15">
+                <h2>Categories</h2>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">id#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        require_once "database_connect.php";
+                        function getCategories($connection){
+                            $sql= "SELECT * FROM categories";
+                            $result = $connection->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $categories[] = $row;
+                                }
+                            }
+                            return $categories;
+                        }
+
+                        foreach (getCategories($connection) as $category) {
+                            echo
+                            '<tr>
+                                <th scope="row">' . $category['id'] . '</th>
+                                    <td>' . $category['name'] . '</td>
+                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_category.php?id=' . $category['id'] . '">Edit</a>
+                                </tr>';
+                        }
+
+                        ?>
+                        <tr><a class="btn btn-outline-info btn-sm" href="add_category.php">Add Category</a></tr>
+                    </tbody>
+                </table>
+            </div>
+            
     </div>
     </div>
 
