@@ -84,11 +84,11 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
         $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description', categoryId = '$categoryId' WHERE id = $id";
         $result = $connection->query($sql);
         if ($result) {
-            if($_SESSION['permissions'] == 2){
-                header('Location: employee_page.php');
+            if($_SESSION['permissions'] == 1){
+                header('Location: admin_page.php');
             }
             else{
-                header('Location: admin_page.php');
+                header('Location: employee_page.php');
             }
         }
     }

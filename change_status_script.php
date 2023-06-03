@@ -13,9 +13,15 @@ if (isset($_GET['id'])) {
         $newStatus = ($currentStatus == 'Paid') ? 'Sent' : 'Paid';
 
         $updateSql = "UPDATE orders SET status = '$newStatus' WHERE id = $orderId";
-        
+
         if ($connection->query($updateSql) === TRUE) {
-            header('Location: employee_page.php');
+            $result = $connection->query($sql);
+            if ($result) {
+                if ($_SESSION['permissions'] == 2) {
+                    header('Location: employee_page.php');
+                } else {
+                    header('Location: admin_page.php');
+                }
         } else {
             echo "Wystąpił błąd podczas zmiany statusu zamówienia: " . $connection->error;
         }
@@ -27,4 +33,5 @@ if (isset($_GET['id'])) {
 }
 
 $connection->close();
+}
 ?>
