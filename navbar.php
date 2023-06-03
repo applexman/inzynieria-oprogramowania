@@ -18,6 +18,7 @@
                 echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="employee_page.php">Pracownik 🦸‍♂️</a>';
             }
             if (isset($_SESSION['logged_flag']) && $_SESSION['logged_flag'] == true) {
+                echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="customer_page.php">Twoje zamówienia</a>';
                 echo '<a class="btn btn-danger shadow me-2 btn-sm" role="button" href="logout_script.php">Wyloguj 🚩</a>';
                 echo '<a class="btn btn-outline-primary shadow ms-2 btn-sm" role="button" href="cart_page.php">Koszyk 🛒</a>';
             } else {
