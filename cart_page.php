@@ -47,7 +47,7 @@ if (isset($_SESSION['alert_msg'])) {
                                 $result = $connection->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        $_SESSION['total'] += $row['price']* $quantity;
+                                        $_SESSION['total'] += $row['price'] * $quantity;
                                         echo
                                         '<div class="card mb-4">
                                         <div class="card-body p-4">
@@ -73,7 +73,7 @@ if (isset($_SESSION['alert_msg'])) {
                                                 <div class="col-md-2 d-flex justify-content-center">
                                                     <div>
                                                         <p class="small text-muted mb-2 pb-3">Cena</p>
-                                                        <p class="lead fw-normal mb-0">' . $row['price']*$quantity . ' zł</p>
+                                                        <p class="lead fw-normal mb-0">' . $row['price'] * $quantity . ' zł</p>
                                                     </div>
                                                 </div>
                                                 
