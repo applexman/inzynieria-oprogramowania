@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Maj 2023, 13:52
+-- Czas generowania: 03 Cze 2023, 14:33
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `ksiegarnia`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Obyczajowe'),
+(2, 'Fantasy');
 
 -- --------------------------------------------------------
 
@@ -86,18 +105,19 @@ INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`) VALUES
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(250) NOT NULL,
+  `description` varchar(1000) NOT NULL,
   `img` varchar(100) NOT NULL,
-  `price` int(11) NOT NULL
+  `price` int(11) NOT NULL,
+  `categoryId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`) VALUES
-(1, 'Pan Tadeusz', 'Pan Tadeusz, czyli ostatni zajazd na Litwie – poemat epicki Adama Mickiewicza wydany w dwóch tomach w 1834 w Paryżu przez Aleksandra Jełowickiego. Ta epopeja narodowa powstała w latach 1832–1834 w Paryżu. Składa się z dwunastu ksiąg pisanych wierszem', '', 20),
-(2, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', '', 25);
+INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `categoryId`) VALUES
+(1, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 2),
+(2, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 1);
 
 -- --------------------------------------------------------
 
@@ -147,6 +167,12 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`) VALUES
 --
 
 --
+-- Indeksy dla tabeli `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `newsletter`
 --
 ALTER TABLE `newsletter`
@@ -185,6 +211,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
 --
+
+--
+-- AUTO_INCREMENT dla tabeli `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `newsletter`

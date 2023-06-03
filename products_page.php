@@ -16,65 +16,101 @@ session_start();
 </head>
 
 <body>
-    <?php include 'navbar.php'; ?>
-
-
-
+    <?php
+    include 'navbar.php';
+    require_once "database_connect.php";
+    require_once "review_rating_script.php";
+    ?>
+    
     <section class="py-5">
         <div class="container py-5">
             <div class="row mb-4 mb-lg-5">
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <h2 class="fw-bold">Produkty</h2>
+                <div class="col-md-8 col-xl-3">
+                    <h2 class="fw-bold">Kategorie</h2>
+                    <ul class="list-group">
+                        <?php
+
+                        $categories = array();
+                        $sql_categories = "SELECT * FROM categories";
+                        $result_categories = $connection->query($sql_categories);
+                        if ($result_categories->num_rows > 0) {
+                            echo
+                            '<li class="list-group-item selected-category">
+                                <a href="products_page.php">Wszystkie książki</a>
+                            </li>';
+                            while ($row_categories = $result_categories->fetch_assoc()) {
+                                $categories[] = $row_categories;
+                            }
+                        }
+                        foreach ($categories as $category) {
+                            echo '<li class="list-group-item">
+                                <a href="products_page.php?category=' . $category['id'] . '">' . $category['name'] . '</a>
+                              </li>';
+                        }
+                        ?>
+                    </ul>
+                </div>
+                <div class="col-md-8 col-xl-9">
+                    <h2 class="fw-bold">
+                        <?php
+
+                        $selectedCategory = null;
+                        if (isset($_GET['category']) && $_GET['category'] != '') {
+                            $selectedCategory = $_GET['category'];
+                        }
+                        if ($selectedCategory) {
+                            foreach ($categories as $category) {
+                                if ($category['id'] == $selectedCategory) {
+                                    echo $category['name'];
+                                    break;
+                                }
+                            }
+                        } else {
+                            echo "Wszystkie produkty";
+                        }
+                        ?>
+                    </h2>
+                    <div class="row row-cols-1 row-cols-md-3 mx-auto" style="max-width: 900px;">
+                        <?php
+                        $selectedCategory = null;
+                        if (isset($_GET['category']) && $_GET['category'] != '') {
+                            $selectedCategory = $_GET['category'];
+                        }
+
+                        $products = array();
+                        $sql_products = "SELECT * FROM products";
+                        if ($selectedCategory) {
+                            $sql_products .= " WHERE categoryId = $selectedCategory";
+                        }
+                        $result_products = $connection->query($sql_products);
+                        if ($result_products->num_rows > 0) {
+                            while ($row_products = $result_products->fetch_assoc()) {
+                                $products[] = $row_products;
+                            }
+                        }
+
+                        foreach ($products as $product) {
+                            $average_rating = calculateAverageRating($connection, $product['id']);
+                            echo '
+                        <div class="col mb-4">
+                            <div class="text-center">
+                                <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
+                                <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
+                                <p class="lead">Średnia ocena: <b>' . $average_rating . '</b></p>
+                                <a class="btn btn-primary shadow" role="button" href="product_page.php?id=' . $product['id'] . '">
+                                    ' . $product['price'] . ' zł
+                                </a>
+                            </div>
+                        </div>';
+                        }
+
+                        $connection->close();
+                        ?>
+                    </div>
                 </div>
             </div>
-
-            <div class="row row-cols-1 row-cols-md-3 mx-auto" style="max-width: 900px;">
-
-                <?php
-                require_once "database_connect.php";
-                require_once "review_rating_script.php";
-
-                function getProducts($connection)
-                {
-                    $products = array();
-                    $sql = "SELECT * FROM products";
-                    $result = $connection->query($sql);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $products[] = $row;
-                        }
-                    }
-                    return $products;
-                }
-
-
-                foreach (getProducts($connection) as $product) {
-                    $average_rating = calculateAverageRating($connection, $product['id']);
-                    echo '
-                    <div class="col mb-4">
-                        <div class="text-center">
-                            <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
-                            <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
-                    
-                            <p class="lead">Średnia ocena: <b>' . $average_rating . '</b></p>
-                            <p class="text-muted mb-3">' . $product['description'] . '</p>
-                            <a class="btn btn-primary shadow" role="button" href="product_page.php?id=' . $product['id'] . '">
-                                ' . $product['price'] . ' zł
-                            </a>
-                        </div>
-                    </div>';
-                    
-                }
-
-                $connection->close();
-                ?>
-
-            </div>
-
         </div>
     </section>
-
-
 
     <?php include 'footer.php'; ?>
     <script src="assets/js/jquery.min.js"></script>

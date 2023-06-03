@@ -119,19 +119,19 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                                 <td>' . $order['idUser'] . '</td>
                                 <td>' . $order['total'] . '</td>
                                 <td>';
-                        
+
                             foreach (getOrdersDetail($connection) as $orderD) {
                                 if ($order['id'] == $orderD['idOrder']) {
                                     echo '
                                     <p>' . $orderD['productName'] . ' | ' . $orderD['quantity'] . '</p>';
                                 }
                             }
-                        
+
                             echo '
                                 </td>
                             </tr>';
                         }
-                        
+
                         ?>
                     </tbody>
                 </table>
