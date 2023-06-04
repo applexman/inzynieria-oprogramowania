@@ -4,6 +4,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
     header('Location: login_page.php');
     exit();
 }
+ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -47,18 +48,20 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                 <div class="mx-auto" style="max-width: 900px;">
                 <div class="col-md-3 mb-4 mx-auto d-flex"><img class="rounded card-img-top mb-5 mb-md-0 " src="assets/img/products/' . $product[0]['img'] . '" alt="' . $product[0]['name'] . '" /></div>
                     <form method="POST">
-                        <div class="mb-3"><input class="form-control" type="text" name="name" value="' . $product[0]['name'] . '"></div>
-                        <div class="mb-3"><input class="form-control" type="number" name="price" value="' . $product[0]['price'] . '"></div>
-                        <div class="mb-3"><textarea class="form-control" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea></div>
+                        <div class="mb-3">Title<input class="form-control" type="text" name="name" value="' . $product[0]['name'] . '"></div>
+                        <div class="mb-3">Price<input class="form-control" type="number" min=1 name="price" value="' . $product[0]['price'] . '"></div>
+                        <div class="mb-3">Description<textarea class="form-control" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea></div>
                         <div class="mb-3">
+                        Category
                             <select class="form-select" name="category" id="category">';
-                                foreach ($categories as $category) {
-                                    $selected = ($category['id'] == $product[0]['categoryId']) ? 'selected' : '';
-                                    echo '<option value="' . $category['id'] . '" ' . $selected . '>' . $category['name'] . '</option>';
-                                }
-                                echo
-                            '</select>
+        foreach ($categories as $category) {
+            $selected = ($category['id'] == $product[0]['categoryId']) ? 'selected' : '';
+            echo '<option value="' . $category['id'] . '" ' . $selected . '>' . $category['name'] . '</option>';
+        }
+        echo
+        '</select>
                         </div>
+                        <div class="mb-3">Quantity<input class="form-control" type="number" min=1 name="quantity" value="' . $product[0]['quantity'] . '"></div>
                         <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="delete">Usuń</button></div>
                         <div class="m-3"><button class="btn btn-outline-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
                         </form>
@@ -66,36 +69,41 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
             </div>
         </section>';
     }
+
     if (isset($_POST['delete'])) {
         $sql = "DELETE FROM products WHERE id = $id";
         $connection->query($sql);
-        if($_SESSION['permissions'] == 2){
+        if ($_SESSION['permissions'] == 2) {
             header('Location: employee_page.php');
-        }
-        else{
+            exit();
+        } else {
             header('Location: admin_page.php');
+            exit();
         }
     }
+
     if (isset($_POST['confirm'])) {
         $name = $_POST['name'];
         $price = $_POST['price'];
         $description = $_POST['description'];
         $categoryId = $_POST['category'];
-        $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description', categoryId = '$categoryId' WHERE id = $id";
+        $quantity = $_POST['quantity'];
+        $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description', quantity='$quantity', categoryId = '$categoryId' WHERE id = $id";
         $result = $connection->query($sql);
         if ($result) {
-            if($_SESSION['permissions'] == 1){
+            if ($_SESSION['permissions'] == 1) {
+                $output = ob_get_clean();
                 header('Location: admin_page.php');
-            }
-            else{
+                exit();
+            } else {
+                $output = ob_get_clean();
                 header('Location: employee_page.php');
+                exit();
             }
         }
     }
     $connection->close();
     ?>
-
-
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

@@ -37,7 +37,8 @@ if (isset($_SESSION['alert_msg'])) {
                     <div class="position-relative" style="display: flex;flex-wrap: wrap;justify-content: flex-end;">
                         <div style="position: relative;flex: 0 0 45%;transform: translate3d(-15%, 35%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.8" src="assets/img/products/harry1.jpg"></div>
                         <div style="position: relative;flex: 0 0 45%;transform: translate3d(-5%, 20%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.4" src="assets/img/products/lalka.jpg"></div>
-                        <div style="position: relative;flex: 0 0 60%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/spy1.jpg"></div>
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/spy1.jpg"></div>
+                        <div style="position: relative;flex: 0 0 30%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/narnia1.jpg"></div>
                     </div>
                 </div>
             </div>

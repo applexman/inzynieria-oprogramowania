@@ -25,6 +25,14 @@ try {
                 $product_id = $value['id'];
                 $quantity = $value['quantity'];
                 $connection->query("INSERT INTO orderdetail VALUES (NULL, '$orderId','$product_id', '$quantity')");
+                $sql = "SELECT quantity FROM products WHERE id='$product_id'";
+                $result = $connection->query($sql);
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $currentQuantity = $row['quantity'];
+                    $newQuantity = $currentQuantity - $quantity;
+                    $connection->query("UPDATE products SET quantity='$newQuantity' WHERE id='$product_id'");
+                }
             }
             $_SESSION['alert_msg'] = "Gratulacje! Twoje zamówienie zostało złożone!";
             $_SESSION['alert_type'] = "success";

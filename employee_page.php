@@ -93,7 +93,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                     </tbody>
                 </table>
             </div>
-            <div class="col col-md-7">
+            <div class="col col-md-8">
                 <h2>Products</h2>
                 <table class="table table-striped table-hover">
                     <thead>
@@ -101,20 +101,22 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                             <th scope="col">id#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Img</th>
                             <th scope="col">Price</th>
                             <th scope="col">Category</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                    <?php
                         require_once "database_connect.php";
 
 
                         function getProducts($connection)
                         {
                             $products = array();
-                            $sql = "SELECT products.id, products.name, products.description, products.price, categories.name as categories
+                            $sql = "SELECT products.id, products.name, products.description, products.price, products.img, products.quantity, categories.name as categories
                             FROM products, categories
                             WHERE products.categoryId= categories.id
                             ORDER BY products.id;";
@@ -134,9 +136,11 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                                 <th scope="row">' . $product['id'] . '</th>
                                     <td>' . $product['name'] . '</td>
                                     <td>' . $product['description'] . '</td>
-                                    <td>' . $product['price'] . ' zł</td>
+                                    <td>' . $product['img'] . '</td>
                                     <td>' . $product['categories'] . '</td>
-                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edit</a></td>
+                                    <td>' . $product['price'] . '</td>
+                                    <td>' . $product['quantity'] . '</td>
+                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edit</a><td>
                                 </tr>';
                         }
 
@@ -145,7 +149,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                     </tbody>
                 </table>
             </div>
-            <div class="col col-md-5">
+            <div class="col col-md-4">
                 <h2>Categories</h2>
                 <table class="table table-striped table-hover">
                     <thead>

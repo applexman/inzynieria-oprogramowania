@@ -97,12 +97,11 @@ session_start();
                                 echo '
                                 <div class="col mb-4">
                                     <div class="text-center">
+                                    <a class="btn" role="button" href="product_page.php?id=' . $product['id'] . '">
                                         <img class="rounded mb-3 fit-cover" width="200" height="200" src="assets/img/products/' . $product['img'] . '">
-                                        <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></h5>
+                                        <h5 class="fw-bold mb-0"><strong>' . $product['name'] . '</strong></a></h5>
                                         <p class="lead">Średnia ocena: <b>' . $average_rating . '</b></p>
-                                        <a class="btn btn-primary shadow" role="button" href="product_page.php?id=' . $product['id'] . '">
-                                            ' . $product['price'] . ' zł
-                                        </a>
+                                        <p class="lead">Cena: <b>' . $product['price'] . 'zł</b></p>
                                     </div>
                                 </div>';
                             }
