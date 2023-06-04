@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -44,16 +45,23 @@ session_start();
                         <p class="lead"><?php echo $product[0]['description']; ?></p>
                         <?php $average_rating = calculateAverageRating($connection, $product[0]['id']); ?>
                         <p class="lead"><?php echo "Średnia ocena:<b> " . $average_rating ."</b>"; ?></p>
+                        <p class="lead"><?php echo "Ilość dostępnych sztuk:<b> " . $product[0]['quantity'] ."</b>"; ?></p>
                         <div class="d-flex">
                             <form action="add_to_cart.php" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $product[0]['id']; ?>">
                                 <fieldset>
-                                    <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="number" value="1" max="10" min="1" style="max-width: 5rem" />
+                                    <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="number" value="1" min="1" style="max-width: 5rem" />
                                 </fieldset>
                                 <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                                     <i class="bi-cart-fill me-1"></i>
                                     Dodaj do koszyka
                                 </button>
+                                <?php
+                                $error = isset($_GET['error']) ? $_GET['error'] : '';
+                                if ($error == 'quantity') {
+                                    echo '<div class="alert alert-danger" role="alert">Wprowadzona ilość przekracza dostępną ilość towaru.</div>';
+                                }
+                                ?>
                             </form>
                         </div>
                     </div>

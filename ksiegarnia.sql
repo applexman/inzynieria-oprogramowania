@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 03 Cze 2023, 21:47
+-- Czas generowania: 04 Cze 2023, 16:36
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -83,7 +83,10 @@ INSERT INTO `orderdetail` (`id`, `idOrder`, `idProduct`, `quantity`) VALUES
 (3, 2, 1, 1),
 (4, 3, 2, 4),
 (5, 4, 1, 3),
-(6, 5, 2, 1);
+(6, 5, 2, 1),
+(7, 6, 1, 1),
+(8, 6, 2, 2),
+(9, 7, 2, 24);
 
 -- --------------------------------------------------------
 
@@ -108,7 +111,9 @@ INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`, `status`) VALUES
 (2, 1, 45, '2023-05-22', 'Sent'),
 (3, 1, 100, '2023-05-22', 'Paid'),
 (4, 3, 60, '2023-06-03', 'Sent'),
-(5, 3, 25, '2023-06-03', 'Sent');
+(5, 3, 25, '2023-06-03', 'Sent'),
+(6, 3, 65, '2023-06-04', 'Paid'),
+(7, 3, 480, '2023-06-04', 'Paid');
 
 -- --------------------------------------------------------
 
@@ -118,22 +123,23 @@ INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`, `status`) VALUES
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(250) NOT NULL,
   `description` varchar(1000) NOT NULL,
   `img` varchar(100) NOT NULL,
   `price` int(11) NOT NULL,
-  `categoryId` int(11) DEFAULT NULL
+  `quantity` int(11) NOT NULL,
+  `categoryId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `categoryId`) VALUES
-(1, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 25, 2),
-(2, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 1),
-(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!\r\n', 'spy1.jpg', 19, 3),
-(4, 'Test', 'Testowy obiekt, który zostanie dodany', 'default.png', 19, 1);
+INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `quantity`, `categoryId`) VALUES
+(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 99, 1),
+(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 10, 2),
+(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 20, 3),
+(4, 'Opowieści z Narnii Lew, czarownica i stara szafa', 'Lew, czarownica i stara szafa (ang. The Lion, the Witch and the Wardrobe) – powieść fantasy autorstwa C.S. Lewisa, wydana w 1950 roku. Książka, umiejscowiona w latach 40. XX wieku, jest pierwszą opublikowaną i zarazem najbardziej znaną częścią cyklu Opowieści z Narni.', 'narnia1.jpg', 25, 30, 2);
 
 -- --------------------------------------------------------
 
@@ -246,19 +252,19 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT dla tabeli `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `reviews`

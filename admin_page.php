@@ -145,18 +145,22 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                             <th scope="col">Img</th>
                             <th scope="col">Category</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                    <?php
                         require_once "database_connect.php";
 
 
                         function getProducts($connection)
                         {
                             $products = array();
-                            $sql = "SELECT * FROM products";
+                            $sql = "SELECT products.id, products.name, products.description, products.price, products.img, products.quantity, categories.name as categories
+                            FROM products, categories
+                            WHERE products.categoryId= categories.id
+                            ORDER BY products.id;";
                             $result = $connection->query($sql);
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
@@ -174,7 +178,9 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                                     <td>' . $product['name'] . '</td>
                                     <td>' . $product['description'] . '</td>
                                     <td>' . $product['img'] . '</td>
+                                    <td>' . $product['categories'] . '</td>
                                     <td>' . $product['price'] . '</td>
+                                    <td>' . $product['quantity'] . '</td>
                                     <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edit</a><td>
                                 </tr>';
                         }
