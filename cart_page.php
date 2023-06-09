@@ -83,7 +83,31 @@ if (isset($_SESSION['alert_msg'])) {
                                 }
                             }
                             echo
-                            '<div class="card mb-5">
+                            '
+                        
+                        <h3 class="mt-5">Dane do wysyłki:</h3>
+                        <form action="process_order.php" method="POST">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Imię i nazwisko</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">Miejscowość</label>
+                                <input type="text" class="form-control" id="city" name="city" rows="3" required></input>
+                            </div>
+                            <div class="mb-3">
+                            <label for="street" class="form-label">Ulica</label>
+                            <input type="text" class="form-control" id="street" name="street" rows="3" required></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="post" class="form-label">Kod pocztowy</label>
+                            <input type="text" class="form-control" id="post" name="post" rows="3" required></input>
+                        </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Numer telefonu</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="card mb-5">
                             <div class="card-body p-4">
                                 <div class="float-end">
                                     <p class="mb-0 me-5 d-flex align-items-center">
@@ -93,10 +117,10 @@ if (isset($_SESSION['alert_msg'])) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <a class="btn btn-danger btn-lg ms-3" href="unset_cart.php" role="button">Wyczść koszyk</a>
-                            <a class="btn btn-primary btn-lg ms-3" href="order_script.php" role="button">Zapłać</a>
-                        </div>
-                        ';
+                        <a class="btn btn-danger btn-lg ms-3" href="unset_cart.php" role="button">Wyczyść koszyk</a>
+                        <a class="btn btn-primary btn-lg ms-3" href="order_script.php" role="button">Zapłać</a>
+                    </div>
+                        </form>';
                         }
                         ?>
                 </div>

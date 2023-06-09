@@ -7,6 +7,7 @@
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item"><a class="nav-link active" href="index.php">Strona główna</a></li>
                 <li class="nav-item"><a class="nav-link" href="products_page.php">Produkty</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.php">O nas</a></li>
             </ul>
 
             <?php
@@ -18,7 +19,7 @@
                 echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="employee_page.php">Pracownik 🦸‍♂️</a>';
             }
             if (isset($_SESSION['logged_flag']) && $_SESSION['logged_flag'] == true) {
-                echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="customer_page.php">Twoje zamówienia</a>';
+                echo '<a class="btn btn-outline-warning shadow me-2 btn-sm" role="button" href="customer_page.php">Twoje konto</a>';
                 echo '<a class="btn btn-danger shadow me-2 btn-sm" role="button" href="logout_script.php">Wyloguj 🚩</a>';
                 echo '<a class="btn btn-outline-primary shadow ms-2 btn-sm" role="button" href="cart_page.php">Koszyk 🛒</a>';
             } else {
