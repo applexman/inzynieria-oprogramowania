@@ -24,7 +24,7 @@
         </div>
         <hr>
         <div class="text-muted d-flex justify-content-between align-items-center pt-3">
-            <p class="mb-0">Copyright © 2022 Najlepsza Księgarnia</p>
+            <p class="mb-0">Copyright © 2023 Najlepsza Księgarnia</p>
         </div>
     </div>
 </footer>

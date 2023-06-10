@@ -37,10 +37,14 @@ try {
                     $connection->query("UPDATE products SET quantity='$newQuantity' WHERE id='$product_id'");
                 }
             }
-            $_SESSION['alert_msg'] = "Gratulacje! Twoje zamówienie zostało złożone!";
-            $_SESSION['alert_type'] = "success";
-            unset($_SESSION['cart']);
-            header('Location: confirm_order_page.php');
+
+            if ($payment == 'Przelew bankowy') {
+                unset($_SESSION['cart']);
+                header('Location: confirm_order_page.php?payment=przelew&id='.$orderId.'&total='.$_SESSION['total']);
+            } else {
+                unset($_SESSION['cart']);
+                header('Location: confirm_order_page.php?payment=inny&id='.$orderId.'&total='.$_SESSION['total']);
+            }
         } else {
             throw new Exception($connection->error);
         }
@@ -50,4 +54,3 @@ try {
     echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
     echo '<br />Informacja developerska: ' . $e;
 }
-?>

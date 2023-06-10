@@ -2,7 +2,7 @@
     <div class="container">
         <div class="border rounded border-white d-flex flex-column justify-content-between align-items-center flex-lg-row bg-primary-gradient p-4 p-lg-5">
             <div class="text-center text-lg-start py-3 py-lg-1">
-                <h2 class="fw-bold mb-2">Zapisz się do naszego newsletter</h2>
+                <h2 class="fw-bold mb-2">Zapisz się do naszego newslettera</h2>
                 <p class="mb-0">10% zniżki na pierwsze zakupy</p>
             </div>
             <form class="d-flex justify-content-center flex-wrap flex-lg-nowrap" method="post">
