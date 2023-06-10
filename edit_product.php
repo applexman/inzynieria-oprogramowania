@@ -63,7 +63,7 @@ ob_start();
         echo
         '</select>
                         </div>
-                        <div class="mb-3"><label for="quantity">Ilość</label><input class="form-control" type="number" id="quantity" min=1 name="quantity" value="' . $product[0]['quantity'] . '"></div>
+                        <div class="mb-3"><label for="quantity">Ilość</label><input class="form-control" type="number" min=1 id="quantity" name="quantity" value="' . $product[0]['quantity'] . '"></div>
                         <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="delete">Usuń</button></div>
                         <div class="m-3"><button class="btn btn-outline-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
                         </form>

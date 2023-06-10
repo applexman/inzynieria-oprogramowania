@@ -150,7 +150,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                             <th scope="col">Opis</th>
                             <th scope="col">Nazwa obrazka</th>
                             <th scope="col">Cena</th>
-                            <th scope="col">Kategoria</th>
+                            <th scope="col">Kategorie</th>
                             <th scope="col">Ilość</th>
                             <th scope="col">Edytuj</th>
                         </tr>
@@ -163,10 +163,13 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                         function getProducts($connection)
                         {
                             $products = array();
-                            $sql = "SELECT products.id, products.name, products.description, products.price, products.img, products.quantity, categories.name as categories
-                            FROM products, categories
-                            WHERE products.categoryId= categories.id
-                            ORDER BY products.id;";
+                            $sql = "SELECT products.id, products.name, products.description, products.price, products.img, products.quantity, GROUP_CONCAT(categories.name) as categories
+                            FROM products
+                            JOIN product_categories ON products.id = product_categories.productID
+                            JOIN categories ON categories.id = product_categories.categoryID
+                            GROUP BY products.id
+                            ORDER BY products.id;
+                            ";
                             $result = $connection->query($sql);
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
@@ -176,6 +179,23 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                             return $products;
                         }
 
+                        function getProductCategories($connection, $productID){
+                            $productCategories = array();
+                            $sql = "SELECT products.id, products.name, products.description, products.price, products.img, products.quantity, GROUP_CONCAT(categories.name) as categories
+                            FROM products
+                            JOIN product_categories ON products.id = product_categories.productID
+                            JOIN categories ON categories.id = product_categories.categoryID
+                            WHERE products.id = $productID
+                            GROUP BY products.id
+                            ORDER BY products.id;";
+                                $result = $connection->query($sql);
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $productCategories[] = $row;
+                                    }
+                                }
+                                return $productCategories;
+                        }
 
                         foreach (getProducts($connection) as $product) {
                             echo
@@ -184,8 +204,13 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
                                     <td>' . $product['name'] . '</td>
                                     <td>' . $product['description'] . '</td>
                                     <td>' . $product['img'] . '</td>
-                                    <td>' . $product['categories'] . '</td>
-                                    <td>' . $product['price'] . '</td>
+                                    <td>' . $product['price'] . 'zł</td>
+                                    <td>';
+                                    foreach(getProductCategories($connection, $product['id']) as $category){
+                                        echo $category['categories'] . ' ';
+                                    }
+                                    echo '
+                                    </td>
                                     <td>' . $product['quantity'] . '</td>
                                     <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edytuj</a><td>
                                 </tr>';
