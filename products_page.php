@@ -78,9 +78,17 @@ session_start();
                         }
 
                         $products = array();
-                        $sql_products = "SELECT * FROM products";
+                        $sql_products = "SELECT * FROM products
+                        JOIN product_categories  ON products.id = product_categories.productID
+                        JOIN categories ON categories.id=product_categories.categoryID";
                         if ($selectedCategory) {
-                            $sql_products .= " WHERE categoryId = $selectedCategory";
+                            $sql_products .= " WHERE product_categories.categoryID = $selectedCategory
+                            GROUP BY products.id
+                            ORDER BY products.id";
+                        } else {
+                            $sql_products .= "
+                            GROUP BY products.id
+                            ORDER BY products.id";
                         }
                         $result_products = $connection->query($sql_products);
                         if ($result_products->num_rows > 0) {

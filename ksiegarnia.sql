@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Cze 2023, 20:12
+-- Czas generowania: 10 Cze 2023, 21:30
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -129,19 +129,41 @@ CREATE TABLE `products` (
   `description` varchar(1000) NOT NULL,
   `img` varchar(100) NOT NULL,
   `price` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `categoryId` int(11) NOT NULL
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `quantity`, `categoryId`) VALUES
-(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 2, 1),
-(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 5, 2),
-(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 13, 3),
-(4, 'Opowieści z Narnii Lew, czarownica i stara szafa', 'Lew, czarownica i stara szafa (ang. The Lion, the Witch and the Wardrobe) – powieść fantasy autorstwa C.S. Lewisa, wydana w 1950 roku. Książka, umiejscowiona w latach 40. XX wieku, jest pierwszą opublikowaną i zarazem najbardziej znaną częścią cyklu Opowieści z Narni.', 'narnia1.jpg', 25, 30, 2);
+INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `quantity`) VALUES
+(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 2),
+(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 5),
+(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 13),
+(4, 'Opowieści z Narnii Lew, czarownica i stara szafa', 'Lew, czarownica i stara szafa (ang. The Lion, the Witch and the Wardrobe) – powieść fantasy autorstwa C.S. Lewisa, wydana w 1950 roku. Książka, umiejscowiona w latach 40. XX wieku, jest pierwszą opublikowaną i zarazem najbardziej znaną częścią cyklu Opowieści z Narni.', 'narnia1.jpg', 25, 30);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `product_categories`
+--
+
+CREATE TABLE `product_categories` (
+  `id` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `categoryID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `product_categories`
+--
+
+INSERT INTO `product_categories` (`id`, `productID`, `categoryID`) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3),
+(4, 4, 2),
+(5, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -248,6 +270,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `product_categories`
+--
+ALTER TABLE `product_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `reviews`
 --
 ALTER TABLE `reviews`
@@ -298,6 +326,12 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT dla tabeli `product_categories`
+--
+ALTER TABLE `product_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT dla tabeli `reviews`
