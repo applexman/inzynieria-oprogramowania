@@ -24,7 +24,7 @@ if (!isset($_SESSION['logged_flag'])) {
     <div class="container text-center">
         <div class="row">
             <div class="col col-md-14">
-                <h2>Your Orders</h2>
+                <h2>Twoje zamówienia</h2>
 
                 <tbody>
                     <?php
@@ -63,15 +63,15 @@ if (!isset($_SESSION['logged_flag'])) {
                         echo '<table class="table table-striped table-hover table-sm">
                             <thead>
                                 <tr>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Name | Quantity</th>
+                                    <th scope="col">Nazwa | Ilość</th>
+                                    <th scope="col">Suma</th>
+                                    <th scope="col">Adres dostawy</th>
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>';
                         foreach ($orders as $order) {
                             echo '
                                 <tr>
-                                <td>' . $order['total'] . 'zł</td>
                                 <td>';
 
                             foreach (getOrdersDetail($connection) as $orderD) {
@@ -83,6 +83,8 @@ if (!isset($_SESSION['logged_flag'])) {
 
                             echo '
                             </td>
+                            <td>' . $order['total'] . 'zł</td>
+                            <td>' . $order['name'] .' '. $order['surname'] . '<br>' . $order['city'] . ' ' . $order['post'] . '<br>' . $order['street'] .' </td>
                             <td>' . $order['status'] . '</td>
                             </tr>';
                         }

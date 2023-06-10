@@ -42,7 +42,7 @@ if ((isset($_POST['email'])) || (isset($_POST['password1'])) || (isset($_POST['p
 		if ($connection->connect_errno != 0) {
 			throw new Exception(mysqli_connect_errno());
 		} else {
-			//Czy email już istnieje?
+
 			$result = $connection->query("SELECT id FROM users WHERE email='$email'");
 
 			if (!$result) throw new Exception($connection->error);
@@ -57,7 +57,6 @@ if ((isset($_POST['email'])) || (isset($_POST['password1'])) || (isset($_POST['p
 
 
 			if ($succes_flag == true) {
-				//dodajemy użytkownika do bazy
 
 				if ($connection->query("INSERT INTO users VALUES (NULL, '$email', '$password_hash', '0')")) {
 					$_SESSION['alert_msg'] = "Gratulacje! Zostałeś zarejestrowany!";

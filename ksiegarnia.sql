@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Cze 2023, 16:36
+-- Czas generowania: 10 Cze 2023, 16:38
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -78,15 +78,7 @@ CREATE TABLE `orderdetail` (
 --
 
 INSERT INTO `orderdetail` (`id`, `idOrder`, `idProduct`, `quantity`) VALUES
-(1, 1, 2, 1),
-(2, 2, 2, 1),
-(3, 2, 1, 1),
-(4, 3, 2, 4),
-(5, 4, 1, 3),
-(6, 5, 2, 1),
-(7, 6, 1, 1),
-(8, 6, 2, 2),
-(9, 7, 2, 24);
+(1, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -99,21 +91,23 @@ CREATE TABLE `orders` (
   `idUser` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   `orderDate` date NOT NULL,
-  `status` varchar(11) NOT NULL DEFAULT 'Paid'
+  `status` varchar(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `surname` varchar(30) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `post` varchar(10) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(12) NOT NULL,
+  `payment` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `orders`
 --
 
-INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`, `status`) VALUES
-(1, 1, 25, '2023-05-22', 'Paid'),
-(2, 1, 45, '2023-05-22', 'Sent'),
-(3, 1, 100, '2023-05-22', 'Paid'),
-(4, 3, 60, '2023-06-03', 'Sent'),
-(5, 3, 25, '2023-06-03', 'Sent'),
-(6, 3, 65, '2023-06-04', 'Paid'),
-(7, 3, 480, '2023-06-04', 'Paid');
+INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`, `status`, `name`, `surname`, `city`, `street`, `post`, `email`, `phone`, `payment`) VALUES
+(1, 3, 20, '2023-06-10', 'Złożone', 'Test', 'Testowy', 'Testowo', 'Testowa 1', '11-111', 'testowy@test.com', '123456789', 'Przelew bankowy');
 
 -- --------------------------------------------------------
 
@@ -136,9 +130,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `quantity`, `categoryId`) VALUES
-(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 99, 1),
-(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 10, 2),
-(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 20, 3),
+(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 4, 1),
+(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 7, 2),
+(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 15, 3),
 (4, 'Opowieści z Narnii Lew, czarownica i stara szafa', 'Lew, czarownica i stara szafa (ang. The Lion, the Witch and the Wardrobe) – powieść fantasy autorstwa C.S. Lewisa, wydana w 1950 roku. Książka, umiejscowiona w latach 40. XX wieku, jest pierwszą opublikowaną i zarazem najbardziej znaną częścią cyklu Opowieści z Narni.', 'narnia1.jpg', 25, 30, 2);
 
 -- --------------------------------------------------------
@@ -252,13 +246,13 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT dla tabeli `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `products`

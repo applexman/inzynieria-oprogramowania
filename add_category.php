@@ -26,9 +26,9 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
     <section>
         <div class="container py-5">
             <div class="mx-auto" style="max-width: 900px;">
-            <h2>Utwórz kategorię</h2>
+            <h2 class="text-center"><b><label for="name"> Dodaj kategorię</label></b></h2>
                 <form method="post">
-                    <div class="mb-3"><input class="form-control" type="text" name="name" placeholder="Nazwa" required></div>
+                    <div class="mb-3"><input class="form-control" type="text" id="name" name="name" placeholder="Nazwa" required></div>
             </div>
             <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
             </form>

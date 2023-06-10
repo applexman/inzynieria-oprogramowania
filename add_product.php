@@ -26,11 +26,12 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
     <section>
         <div class="container py-5">
             <div class="mx-auto" style="max-width: 900px;">
+            <h2 class="text-center"><b><label for="title">Dodaj produkt</label></b></h2>
                 <div class="col-md-3 mb-4 mx-auto d-flex"><img class="rounded card-img-top mb-5 mb-md-0 " src="assets/img/products/default.png" alt="default image" /></div>
                 <form method="post">
-                    <div class="mb-3"><input class="form-control" type="text" name="name" placeholder="Nazwa" required></div>
-                    <div class="mb-3"><input class="form-control" type="number" name="price" min=1 placeholder="Cena" required></div>
-                    <textarea class="form-control" aria-label="With textarea" name="description" placeholder="Opis" required></textarea>
+                    <div class="mb-3"><label for="title">Tytuł</label><input class="form-control" type="text" id="title" name="name" placeholder="Tytuł" required></div>
+                    <div class="mb-3"><label for="price">Cena</label><input class="form-control" type="number" id="price" name="price" min=1 placeholder="Cena" required></div>
+                    <label for="description">Opis</label><textarea class="form-control" aria-label="With textarea" id="description" name="description" placeholder="Opis" required></textarea>
                     <div class="mb-3">
                         <label for="category" class="form-label">Kategoria</label>
                         <select class="form-select" name="category" id="category">

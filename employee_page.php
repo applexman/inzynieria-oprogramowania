@@ -24,16 +24,17 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
     <div class="container text-center">
         <div class="row">
         <div class="col col-md-12">
-                <h2>Orders</h2>
+                <h2>Zamówienia</h2>
                 <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
                             <th scope="col">id#</th>
-                            <th scope="col">User ID</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Name | Quantity</th>
+                            <th scope="col">ID Użytkownika</th>
+                            <th scope="col">Suma</th>
+                            <th scope="col">Nazwa | Ilość</th>
+                            <th scope="col">Adres dostawy
                             <th scope="col">Status</th>
-                            <th scope="col">Change status</th>
+                            <th scope="col">Zmień status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,8 +85,9 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
 
                             echo '
                                 </td>
+                                <td>' . $order['name'] .' '. $order['surname'] . '<br>' . $order['city'] . ' ' . $order['post'] . '<br>' . $order['street'] .' </td>
                                 <td>' . $order['status'] . '</td>
-                                <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="change_status_script.php?id=' . $order['id'] . '">Change</a></td>
+                                <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="change_status_script.php?id=' . $order['id'] . '">Zmień</a></td>
                             </tr>';
                         }
 
@@ -94,18 +96,18 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                 </table>
             </div>
             <div class="col col-md-8">
-                <h2>Products</h2>
+                <h2>Produkty</h2>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">id#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Img</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Edit</th>
+                            <th scope="col">Nazwa</th>
+                            <th scope="col">Opis</th>
+                            <th scope="col">Nazwa obrazka</th>
+                            <th scope="col">Cena</th>
+                            <th scope="col">Kategoria</th>
+                            <th scope="col">Ilość</th>
+                            <th scope="col">Edytuj</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,23 +142,23 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                                     <td>' . $product['categories'] . '</td>
                                     <td>' . $product['price'] . '</td>
                                     <td>' . $product['quantity'] . '</td>
-                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edit</a><td>
+                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_product.php?id=' . $product['id'] . '">Edytuj</a><td>
                                 </tr>';
                         }
 
                         ?>
-                        <tr><a class="btn btn-outline-info btn-sm" href="add_product.php">Add product</a></tr>
+                        <tr><a class="btn btn-outline-info btn-sm" href="add_product.php">Dodaj produkt</a></tr>
                     </tbody>
                 </table>
             </div>
             <div class="col col-md-4">
-                <h2>Categories</h2>
+                <h2>Kategorie</h2>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">id#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Edit</th>
+                            <th scope="col">Nazwa</th>
+                            <th scope="col">Edytuj</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -178,12 +180,12 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                             '<tr>
                                 <th scope="row">' . $category['id'] . '</th>
                                     <td>' . $category['name'] . '</td>
-                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_category.php?id=' . $category['id'] . '">Edit</a></td>
+                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_category.php?id=' . $category['id'] . '">Edytuj</a></td>
                                 </tr>';
                         }
 
                         ?>
-                        <tr><a class="btn btn-outline-info btn-sm" href="add_category.php">Add Category</a></tr>
+                        <tr><a class="btn btn-outline-info btn-sm" href="add_category.php">Dodaj kategorię</a></tr>
                     </tbody>
                 </table>
             </div>

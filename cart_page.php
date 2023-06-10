@@ -27,7 +27,7 @@ if (isset($_SESSION['alert_msg'])) {
 <body>
     <?php require 'navbar.php'; ?>
 
-    <section class="vh-auto" style="background-color: #fdccbc;">
+    <section class="vh-auto";">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col">
@@ -83,20 +83,68 @@ if (isset($_SESSION['alert_msg'])) {
                                 }
                             }
                             echo
-                            '<div class="card mb-5">
+                            '
+                            <div class="d-flex justify-content-end">
+                            <a class="btn btn-danger btn-lg ms-3" href="unset_cart.php" role="button">Wyczyść koszyk</a>
+                            </div>
+                        <h3 class="mt-5">Dane do wysyłki:</h3>
+                        <form class="row g-3 needs-validation" action="order_script.php" method="POST">
+                            <div class="col-md-4">
+                                <label for="name" class="form-label">Imię</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="surname" class="form-label">Nazwisko</label>
+                                <input type="text" class="form-control" id="surname" name="surname" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="city" class="form-label">Miejscowość</label>
+                                <input type="text" class="form-control" id="city" name="city" rows="3" required></input>
+                            </div>
+                            <div class="col-md-4">
+                            <label for="street" class="form-label">Ulica</label>
+                            <input type="text" class="form-control" id="street" name="street" rows="3" required></input>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="post" class="form-label">Kod pocztowy</label>
+                            <input type="text" class="form-control" id="post" name="post" rows="3" required></input>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                            <div class="col-md-4">
+                                <label for="phone" class="form-label">Numer telefonu</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="col-md-4">
+                            <label class="form-label">Sposób płatności</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="cash_on_delivery" name="payment_method" value="Za pobraniem" required>
+                                    <label class="form-check-label" for="cash_on_delivery">Za pobraniem</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="bank_transfer" name="payment_method" value="Przelew bankowy" required>
+                                    <label class="form-check-label" for="bank_transfer">Przelew bankowy</label>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="card mb-5">
                             <div class="card-body p-4">
                                 <div class="float-end">
                                     <p class="mb-0 me-5 d-flex align-items-center">
-                                        <span class="small text-muted me-2">Razem:</span> <span class="lead fw-normal">' . $_SESSION['total'] . ' zł</span>
+                                    <b>
+                                        <span class="text-muted me-2">Razem:</span> <span class="lead fw-normal">' . $_SESSION['total'] . ' zł</span>
+                                    </b>
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <a class="btn btn-danger btn-lg ms-3" href="unset_cart.php" role="button">Wyczść koszyk</a>
-                            <a class="btn btn-primary btn-lg ms-3" href="order_script.php" role="button">Zapłać</a>
+                            <button type="submit" class="btn btn-primary btn-lg ms-3" value="Zapłać">Zapłać</button>
                         </div>
-                        ';
+                        </form>';
                         }
                         ?>
                 </div>
