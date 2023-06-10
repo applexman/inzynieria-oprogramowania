@@ -38,6 +38,31 @@ if (isset($_SESSION['alert_msg'])) {
                         if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
                             echo '<span class="h4">(Twój koszyk jest pusty)</span></p>';
                         } else {
+
+                            $user = $_SESSION['id'];
+                            $sql = "SELECT * FROM shipping WHERE userID = $user";
+                            $result = $connection->query($sql);
+                            $row = $result->fetch_assoc();
+                            if ($result->num_rows > 0) {
+        
+                                $name = $row['name'];
+                                $surname = $row['surname'];
+                                $city = $row['city'];
+                                $street = $row['street'];
+                                $post = $row['post'];
+                                $email = $row['email'];
+                                $phone = $row['phone'];
+                            } else {
+        
+                                $name = "";
+                                $surname = "";
+                                $city = "";
+                                $street = "";
+                                $post = "";
+                                $email = "";
+                                $phone = "";
+                            }
+
                             echo '<span class="h4">(' . count($_SESSION['cart']) . ' pozycje w koszyku)</span></p>';
 
                             foreach ($_SESSION['cart'] as $product) {
@@ -91,31 +116,31 @@ if (isset($_SESSION['alert_msg'])) {
                         <form class="row g-3 needs-validation" action="order_script.php" method="POST">
                             <div class="col-md-4">
                                 <label for="name" class="form-label">Imię</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <input type="text" class="form-control" id="name" name="name" value='. $name .' required>
                             </div>
                             <div class="col-md-4">
                                 <label for="surname" class="form-label">Nazwisko</label>
-                                <input type="text" class="form-control" id="surname" name="surname" required>
+                                <input type="text" class="form-control" id="surname" name="surname" value='. $surname .' required>
                             </div>
                             <div class="col-md-4">
                                 <label for="city" class="form-label">Miejscowość</label>
-                                <input type="text" class="form-control" id="city" name="city" rows="3" required></input>
+                                <input type="text" class="form-control" id="city" name="city" rows="3" value='. $city .' required></input>
                             </div>
                             <div class="col-md-4">
                             <label for="street" class="form-label">Ulica</label>
-                            <input type="text" class="form-control" id="street" name="street" rows="3" required></input>
+                            <input type="text" class="form-control" id="street" name="street" rows="3" value='. $street .' required></input>
                         </div>
                         <div class="col-md-4">
                             <label for="post" class="form-label">Kod pocztowy</label>
-                            <input type="text" class="form-control" id="post" name="post" rows="3" required></input>
+                            <input type="text" class="form-control" id="post" name="post" rows="3" value='. $post .' required></input>
                         </div>
                         <div class="col-md-4">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" value='. $email .' required>
                         </div>
                             <div class="col-md-4">
                                 <label for="phone" class="form-label">Numer telefonu</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                                <input type="tel" class="form-control" id="phone" name="phone" value='. $phone .' required>
                             </div>
                             <div class="col-md-4">
                             <label class="form-label">Sposób płatności</label>

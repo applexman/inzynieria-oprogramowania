@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Cze 2023, 16:38
+-- Czas generowania: 10 Cze 2023, 17:28
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -78,7 +78,9 @@ CREATE TABLE `orderdetail` (
 --
 
 INSERT INTO `orderdetail` (`id`, `idOrder`, `idProduct`, `quantity`) VALUES
-(1, 1, 2, 1);
+(1, 1, 2, 1),
+(2, 2, 1, 1),
+(3, 2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -107,7 +109,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`, `status`, `name`, `surname`, `city`, `street`, `post`, `email`, `phone`, `payment`) VALUES
-(1, 3, 20, '2023-06-10', 'Złożone', 'Test', 'Testowy', 'Testowo', 'Testowa 1', '11-111', 'testowy@test.com', '123456789', 'Przelew bankowy');
+(1, 3, 20, '2023-06-10', 'Złożone', 'Test', 'Testowy', 'Testowo', 'Testowa 1', '11-111', 'testowy@test.com', '123456789', 'Przelew bankowy'),
+(2, 3, 65, '2023-06-10', 'Złożone', 'Jan', 'Kowalski', 'Testowo', 'Testowa', '12-3456', 'klient@klient.com', '123456789', 'Za pobraniem');
 
 -- --------------------------------------------------------
 
@@ -130,8 +133,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `quantity`, `categoryId`) VALUES
-(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 4, 1),
-(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 7, 2),
+(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 3, 1),
+(2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 5, 2),
 (3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 15, 3),
 (4, 'Opowieści z Narnii Lew, czarownica i stara szafa', 'Lew, czarownica i stara szafa (ang. The Lion, the Witch and the Wardrobe) – powieść fantasy autorstwa C.S. Lewisa, wydana w 1950 roku. Książka, umiejscowiona w latach 40. XX wieku, jest pierwszą opublikowaną i zarazem najbardziej znaną częścią cyklu Opowieści z Narni.', 'narnia1.jpg', 25, 30, 2);
 
@@ -157,6 +160,31 @@ CREATE TABLE `reviews` (
 INSERT INTO `reviews` (`id`, `idProduct`, `idUser`, `review_text`, `stars`, `date`) VALUES
 (1, 1, 1, 'Polecam', 5, '2023-05-30'),
 (2, 1, 1, 'Fajne', 4, '2023-05-30');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `shipping`
+--
+
+CREATE TABLE `shipping` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `surname` varchar(30) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `post` varchar(10) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(12) NOT NULL,
+  `userID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `shipping`
+--
+
+INSERT INTO `shipping` (`id`, `name`, `surname`, `city`, `street`, `post`, `email`, `phone`, `userID`) VALUES
+(1, 'Jan', 'Kowalski', 'Testowo', 'Testowa 10', '12-3456', 'klient@klient.com', '123456789', 3);
 
 -- --------------------------------------------------------
 
@@ -221,6 +249,12 @@ ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `shipping`
+--
+ALTER TABLE `shipping`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
@@ -246,13 +280,13 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT dla tabeli `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `products`
@@ -265,6 +299,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `reviews`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT dla tabeli `shipping`
+--
+ALTER TABLE `shipping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
