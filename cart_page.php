@@ -27,7 +27,7 @@ if (isset($_SESSION['alert_msg'])) {
 <body>
     <?php require 'navbar.php'; ?>
 
-    <section class="vh-auto";">
+    <section class="vh-auto" ;">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col">
@@ -44,7 +44,7 @@ if (isset($_SESSION['alert_msg'])) {
                             $result = $connection->query($sql);
                             $row = $result->fetch_assoc();
                             if ($result->num_rows > 0) {
-        
+
                                 $name = $row['name'];
                                 $surname = $row['surname'];
                                 $city = $row['city'];
@@ -53,7 +53,7 @@ if (isset($_SESSION['alert_msg'])) {
                                 $email = $row['email'];
                                 $phone = $row['phone'];
                             } else {
-        
+
                                 $name = "";
                                 $surname = "";
                                 $city = "";
@@ -64,7 +64,9 @@ if (isset($_SESSION['alert_msg'])) {
                             }
 
                             echo '<span class="h4">(' . count($_SESSION['cart']) . ' pozycje w koszyku)</span></p>';
-
+                            if (isset($_GET['error']) && $_GET['error'] === 'quantity') {
+                                echo '<div class="alert alert-danger" role="alert">Wprowadzono maksymalną ilość danego towaru.</div>';
+                            }
                             foreach ($_SESSION['cart'] as $product) {
                                 $product_id = $product['id'];
                                 $quantity = $product['quantity'];
@@ -74,20 +76,18 @@ if (isset($_SESSION['alert_msg'])) {
                                     while ($row = $result->fetch_assoc()) {
                                         $_SESSION['total'] += $row['price'] * $quantity;
                                         echo
-                                        '<div class="card mb-4">
-                                        <div class="card-body p-4">
+                                        '<div class="card mb-5">
+                                        <div class="card-body p-5">
                 
                                             <div class="row align-items-center">
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <img src="assets/img/products/' . $row['img'] . '" class="img-fluid rounded" alt="">
                                                 </div>
-                                                <div class="col-md-3 d-flex justify-content-center">
+                                                <div class="col-md-4 d-flex">
                                                     <div>
                                                         <p class="small text-muted mb-2 pb-3">Nazwa</p>
                                                         <p class="lead fw-normal mb-2">' . $row['name'] . '</p>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-2 d-flex justify-content-center">
                                                 </div>
                                                 <div class="col-md-2 d-flex justify-content-center">
                                                     <div>
@@ -95,6 +95,19 @@ if (isset($_SESSION['alert_msg'])) {
                                                         <p class="lead fw-normal mb-0">' . $quantity . '</p>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-2 d-flex justify-content-center">
+                                                <div>
+                                                <p class="small text-muted mb-2 pb-3">Zmień ilość</p>
+                                                    <form action="cart_change.php" method="post">
+                                                        <input type="hidden" name="increase_quantity" value='. $product_id .'>
+                                                        <button type="submit" class="btn btn-success">+</button>
+                                                    </form>
+                                                    <form action="cart_change.php" method="post">
+                                                        <input type="hidden" name="decrease_quantity" value='. $product_id .'>
+                                                        <button type="submit" class="btn btn-danger">-</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                                 <div class="col-md-2 d-flex justify-content-center">
                                                     <div>
                                                         <p class="small text-muted mb-2 pb-3">Cena</p>
@@ -116,31 +129,31 @@ if (isset($_SESSION['alert_msg'])) {
                         <form class="row g-3 needs-validation" action="order_script.php" method="POST">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Imię</label>
-                                <input type="text" class="form-control" id="name" name="name" value='. $name .' required>
+                                <input type="text" class="form-control" id="name" name="name" value=' . $name . ' required>
                             </div>
                             <div class="col-md-6">
                                 <label for="surname" class="form-label">Nazwisko</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value='. $surname .' required>
+                                <input type="text" class="form-control" id="surname" name="surname" value=' . $surname . ' required>
                             </div>
                             <div class="col-md-4">
                                 <label for="city" class="form-label">Miejscowość</label>
-                                <input type="text" class="form-control" id="city" name="city" rows="3" value='. $city .' required></input>
+                                <input type="text" class="form-control" id="city" name="city" rows="3" value=' . $city . ' required></input>
                             </div>
                             <div class="col-md-4">
                             <label for="street" class="form-label">Ulica</label>
-                            <input type="text" class="form-control" id="street" name="street" rows="3" value='. $street .' required></input>
+                            <input type="text" class="form-control" id="street" name="street" rows="3" value=' . $street . ' required></input>
                         </div>
                         <div class="col-md-4">
                             <label for="post" class="form-label">Kod pocztowy</label>
-                            <input type="text" class="form-control" id="post" name="post" rows="3" value='. $post .' required></input>
+                            <input type="text" class="form-control" id="post" name="post" rows="3" value=' . $post . ' required></input>
                         </div>
                         <div class="col-md-4">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value='. $email .' required>
+                            <input type="email" class="form-control" id="email" name="email" value=' . $email . ' required>
                         </div>
                             <div class="col-md-4">
                                 <label for="phone" class="form-label">Numer telefonu</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" value='. $phone .' required>
+                                <input type="tel" class="form-control" id="phone" name="phone" value=' . $phone . ' required>
                             </div>
                             <div class="col-md-4">
                             <label class="form-label">Sposób płatności</label>

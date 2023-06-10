@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Cze 2023, 17:28
+-- Czas generowania: 10 Cze 2023, 20:12
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -80,7 +80,10 @@ CREATE TABLE `orderdetail` (
 INSERT INTO `orderdetail` (`id`, `idOrder`, `idProduct`, `quantity`) VALUES
 (1, 1, 2, 1),
 (2, 2, 1, 1),
-(3, 2, 2, 2);
+(3, 2, 2, 2),
+(4, 3, 3, 1),
+(5, 3, 1, 1),
+(6, 4, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -93,7 +96,7 @@ CREATE TABLE `orders` (
   `idUser` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   `orderDate` date NOT NULL,
-  `status` varchar(11) NOT NULL,
+  `status` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
   `city` varchar(100) NOT NULL,
@@ -110,7 +113,9 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `idUser`, `total`, `orderDate`, `status`, `name`, `surname`, `city`, `street`, `post`, `email`, `phone`, `payment`) VALUES
 (1, 3, 20, '2023-06-10', 'Złożone', 'Test', 'Testowy', 'Testowo', 'Testowa 1', '11-111', 'testowy@test.com', '123456789', 'Przelew bankowy'),
-(2, 3, 65, '2023-06-10', 'Złożone', 'Jan', 'Kowalski', 'Testowo', 'Testowa', '12-3456', 'klient@klient.com', '123456789', 'Za pobraniem');
+(2, 3, 65, '2023-06-10', 'Złożone', 'Jan', 'Kowalski', 'Testowo', 'Testowa', '12-3456', 'klient@klient.com', '123456789', 'Za pobraniem'),
+(3, 3, 44, '2023-06-10', 'Złożone', 'Jan', 'Kowalski', 'Testowo', 'Testowa', '12-3456', 'klient@klient.com', '123456789', 'Za pobraniem'),
+(4, 3, 19, '2023-06-10', 'Złożone', 'Jan', 'Kowalski', 'Testowo', 'Testowa', '12-3456', 'klient@klient.com', '123456789', 'Przelew bankowy');
 
 -- --------------------------------------------------------
 
@@ -133,9 +138,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `img`, `price`, `quantity`, `categoryId`) VALUES
-(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 3, 1),
+(1, 'Lalka', 'Powieść społeczno-obyczajowa Bolesława Prusa publikowana w odcinkach w latach 1887–1889 w dzienniku „Kurier Codzienny”, wydana w 1890 w Warszawie w wydawnictwie „Gebethner i Wolff”.', 'lalka.jpg', 25, 2, 1),
 (2, 'Harry Potter i Kamień Filozoficzny', 'Harry Potter i Kamień Filozoficzny (tytuł oryginalny: Harry Potter and the Philosopher’s Stone) – powieść fantasy brytyjskiej pisarki J.K. Rowling, po raz pierwszy wydana 26 czerwca 1997 na terenie Wielkiej Brytanii nakładem wydawnictwa Bloomsbury Publishing.', 'harry1.jpg', 20, 5, 2),
-(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 15, 3),
+(3, 'SPYxFAMILY #01', 'Wybitny szpieg o pseudonimie \"Zmierzch\" musi założyć rodzinę, by zinfiltrować pewną szkołę. Nie wie jednak, że adoptowana córka potrafi czytać w myślach, a świeżo poślubiona żona to płatna zabójczyni! Przed Wami trzymająca w napięciu komedia o wyjątkowej rodzinie z sekretami, na drodze której pojawią się rozmaite niebezpieczeństwa, takie jak na przykład egzaminy wstępne!', 'spy1.jpg', 19, 13, 3),
 (4, 'Opowieści z Narnii Lew, czarownica i stara szafa', 'Lew, czarownica i stara szafa (ang. The Lion, the Witch and the Wardrobe) – powieść fantasy autorstwa C.S. Lewisa, wydana w 1950 roku. Książka, umiejscowiona w latach 40. XX wieku, jest pierwszą opublikowaną i zarazem najbardziej znaną częścią cyklu Opowieści z Narni.', 'narnia1.jpg', 25, 30, 2);
 
 -- --------------------------------------------------------
@@ -280,13 +285,13 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT dla tabeli `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `products`
