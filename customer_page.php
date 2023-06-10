@@ -124,11 +124,11 @@ if (!isset($_SESSION['logged_flag'])) {
                         $phone = "";
                     }
                     ?>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="name" class="form-label">Imię</label>
                         <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" required>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="surname" class="form-label">Nazwisko</label>
                         <input type="text" class="form-control" id="surname" name="surname" value="<?php echo $surname; ?>" required>
                     </div>
@@ -144,15 +144,13 @@ if (!isset($_SESSION['logged_flag'])) {
                         <label for="post" class="form-label">Kod pocztowy</label>
                         <input type="text" class="form-control" id="post" name="post" rows="3" value="<?php echo $post; ?>" required></input>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="phone" class="form-label">Numer telefonu</label>
                         <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $phone; ?>" required>
-                    </div>
-                    <div class="col-md-4">
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary btn-lg ms-3">Zapisz</button>

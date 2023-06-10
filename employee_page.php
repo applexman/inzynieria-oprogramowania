@@ -35,6 +35,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                             <th scope="col">Adres dostawy
                             <th scope="col">Status</th>
                             <th scope="col">Zmień status</th>
+                            <th scope="col">Anuluj zamówienie</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,6 +89,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
                                 <td>' . $order['name'] .' '. $order['surname'] . '<br>' . $order['city'] . ' ' . $order['post'] . '<br>' . $order['street'] .' </td>
                                 <td>' . $order['status'] . '</td>
                                 <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="change_status_script.php?id=' . $order['id'] . '">Zmień</a></td>
+                                <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="cancel_status_script.php?id=' . $order['id'] . '">Anuluj</a></td>
                             </tr>';
                         }
 

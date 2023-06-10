@@ -114,11 +114,11 @@ if (isset($_SESSION['alert_msg'])) {
                             </div>
                         <h3 class="mt-5">Dane do wysyłki:</h3>
                         <form class="row g-3 needs-validation" action="order_script.php" method="POST">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="name" class="form-label">Imię</label>
                                 <input type="text" class="form-control" id="name" name="name" value='. $name .' required>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="surname" class="form-label">Nazwisko</label>
                                 <input type="text" class="form-control" id="surname" name="surname" value='. $surname .' required>
                             </div>
@@ -167,7 +167,7 @@ if (isset($_SESSION['alert_msg'])) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary btn-lg ms-3" value="Zapłać">Zapłać</button>
+                            <button type="submit" class="btn btn-primary btn-lg ms-3" value="Zapłać">Zamów</button>
                         </div>
                         </form>';
                         }

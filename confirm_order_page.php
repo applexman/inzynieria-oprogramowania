@@ -27,10 +27,32 @@ if (!isset($_SESSION['logged_flag'])) {
             <div class="row pt-5">
                 <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
                     <div class="text-center">
-                        <h1 class="fw-bold text-success mb-4">Twoje zamówienie zostało złożone</h1>
-                        <iframe class="rounded" width="560" height="360" src="https://www.youtube.com/embed/SC4xMk98Pdc?start=36" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+                        <?php
+                        if (isset($_GET['payment']) && isset($_GET['id']) && isset($_GET['total'])) {
+                            $payment = $_GET['payment'];
+                            $orderId = $_GET['id'];
+                            $total = $_GET['total'];
 
+                            echo '<h2>Twoje zamówienie zostało złożone</h2>';
+                            echo '<p>Numer zamówienia: ' . $orderId . '</p>';
+
+
+                            if ($payment == 'przelew') {
+                                echo '<p>Suma do zapłaty: ' . $total . 'zł</p>';
+                                echo '<h2>Dane do przelewu</h2>';
+                                echo '<p>
+                                Odbiorca: Księgarnia internetowa<br>
+                                Numer rachunku bankowego: 12345678901234567890<br>
+                                Bank: Najlepszy Bank<br>
+                                Adres banku: ul. Bankowa 1, 00-000 Poznań</p>';
+                            } else if ($payment == 'inny') {
+                                echo '<p>Suma do zapłaty u kuriera: ' . $total . 'zł</p>';
+                            }
+                        } else {
+                            echo '<h1>Błąd: Brak wystarczających informacji o zamówieniu</h1>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
