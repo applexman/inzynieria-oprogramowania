@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once "database_connect.php";
 
@@ -8,18 +7,22 @@ if (!isset($_SESSION['logged_flag'])) {
     exit();
 }
 
-$ordered = "";
-foreach ($_SESSION['cart'] as $key => $value) {
-    $product_id = $value['id'];
-    $quantity = $value['quantity'];
-}
 
+$name = $_POST['name'];
+$surname = $_POST['surname'];
+$city = $_POST['city'];
+$street = $_POST['street'];
+$post = $_POST['post'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$payment = $_POST['payment_method'];
+print_r($_POST);
 try {
     if ($connection->connect_errno != 0) {
         throw new Exception(mysqli_connect_errno());
     } else {
         $currentDate = date('Y-m-d');
-        if ($connection->query("INSERT INTO orders VALUES (NULL, '{$_SESSION['id']}','{$_SESSION['total']}', '$currentDate', 'Paid')")) {
+        if ($connection->query("INSERT INTO orders VALUES (NULL, '{$_SESSION['id']}','{$_SESSION['total']}', '$currentDate', 'Złożone', '$name', '$surname', '$city', '$street', '$post', '$email', '$phone', '$payment')")) {
             $orderId = $connection->insert_id;
             foreach ($_SESSION['cart'] as $key => $value) {
                 $product_id = $value['id'];

@@ -48,11 +48,13 @@ ob_start();
                 <div class="mx-auto" style="max-width: 900px;">
                 <div class="col-md-3 mb-4 mx-auto d-flex"><img class="rounded card-img-top mb-5 mb-md-0 " src="assets/img/products/' . $product[0]['img'] . '" alt="' . $product[0]['name'] . '" /></div>
                     <form method="POST">
-                        <div class="mb-3">Title<input class="form-control" type="text" name="name" value="' . $product[0]['name'] . '"></div>
-                        <div class="mb-3">Price<input class="form-control" type="number" min=1 name="price" value="' . $product[0]['price'] . '"></div>
-                        <div class="mb-3">Description<textarea class="form-control" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea></div>
+                        <div class="mb-3"><label for="title">Tytuł</label><input class="form-control" id ="title" type="text" name="name" value="' . $product[0]['name'] . '"></div>
+                        <div class="mb-3"><label for="price">Cena</label><input class="form-control" id="price" type="number" min=1 name="price" value="' . $product[0]['price'] . '"></div>
+                        <div class="mb-3"><label for="des">Opis</label><textarea class="form-control" id="des" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea></div>
                         <div class="mb-3">
-                        Category
+                        <label for="category">
+                        Kategoria
+                        </label>
                             <select class="form-select" name="category" id="category">';
         foreach ($categories as $category) {
             $selected = ($category['id'] == $product[0]['categoryId']) ? 'selected' : '';
@@ -61,7 +63,7 @@ ob_start();
         echo
         '</select>
                         </div>
-                        <div class="mb-3">Quantity<input class="form-control" type="number" min=1 name="quantity" value="' . $product[0]['quantity'] . '"></div>
+                        <div class="mb-3"><label for="quantity">Ilość</label><input class="form-control" type="number" id="quantity" min=1 name="quantity" value="' . $product[0]['quantity'] . '"></div>
                         <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="delete">Usuń</button></div>
                         <div class="m-3"><button class="btn btn-outline-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
                         </form>

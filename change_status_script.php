@@ -10,7 +10,7 @@ if (isset($_GET['id'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $currentStatus = $row['status'];
-        $newStatus = ($currentStatus == 'Paid') ? 'Sent' : 'Paid';
+        $newStatus = ($currentStatus == 'Złożone') ? 'Wysłano' : 'Złożone';
 
         $updateSql = "UPDATE orders SET status = '$newStatus' WHERE id = $orderId";
 
