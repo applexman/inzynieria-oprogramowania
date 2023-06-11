@@ -4,6 +4,7 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
     header('Location: login_page.php');
     exit();
 }
+ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -26,33 +27,37 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
     <section>
         <div class="container py-5">
             <div class="mx-auto" style="max-width: 900px;">
-            <h2 class="text-center"><b><label for="title">Dodaj produkt</label></b></h2>
+                <h2 class="text-center"><b><label for="title">Dodaj produkt</label></b></h2>
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] === 'quantity') {
+                            echo '<div class="alert alert-danger" role="alert">Musisz wpisać dane ponownie, ponieważ nie wybrałeś żadnej kategorii!</div>';
+                        }
+                ?>
                 <div class="col-md-3 mb-4 mx-auto d-flex"><img class="rounded card-img-top mb-5 mb-md-0 " src="assets/img/products/default.png" alt="default image" /></div>
                 <form method="post">
                     <div class="mb-3"><label for="title">Tytuł</label><input class="form-control" type="text" id="title" name="name" placeholder="Tytuł" required></div>
                     <div class="mb-3"><label for="price">Cena</label><input class="form-control" type="number" id="price" name="price" min=1 placeholder="Cena" required></div>
                     <label for="description">Opis</label><textarea class="form-control" aria-label="With textarea" id="description" name="description" placeholder="Opis" required></textarea>
                     <div class="mb-3">
-                        <label for="category" class="form-label">Kategoria</label>
-                        <select class="form-select" name="category" id="category">
-                            <?php
-                            $sql = "SELECT * FROM categories";
-                            $result = $connection->query($sql);
-                            $categories = array();
+                        <label for="category" class="form-label">Kategorie</label>
+                        <?php
 
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $categories[] = $row;
-                                }
+                        $sql = "SELECT * FROM categories";
+                        $result = $connection->query($sql);
+                        $categories = array();
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $categories[] = $row;
                             }
+                        }
 
-                            foreach ($categories as $category) {
-                                echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
-                            }
-                            ?>
-
-                        </select>
+                        foreach ($categories as $category) {
+                            echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="c' . $category['id'] . '" name="categories[]" value="' . $category['id'] . '"><label for="c' . $category['id'] . '" requ>' . $category['name'] . '</label></div>';
+                        }
+                        ?>
                     </div>
+                    <div class="mb-3"><label for="quantity">Ilość</label><input class="form-control" type="number" id="quantity" name="quantity" min=1 placeholder="Ilość" required></div>
                     <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="confirm">Zatwierdź</button></div>
                 </form>
             </div>
@@ -64,15 +69,28 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1 && $_SE
         $name = $_POST['name'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $category = $_POST['category'];
-        $sql = "INSERT INTO products (name, price, img, description, categoryId) VALUES ('$name', '$price', 'default.png', '$description', '$category')";
-        $result = $connection->query($sql);
-        if ($result) {
-            if ($_SESSION['permissions'] == 2) {
-                header('Location: employee_page.php');
-            } else {
-                header('Location: admin_page.php');
+        $category = $_POST['categories'];
+        $quantity = $_POST['quantity'];
+        if (!empty($category)) {
+            $sql = "INSERT INTO products (name, price, img, description, quantity) VALUES ('$name', '$price', 'default.png', '$description', '$quantity')";
+            $result = $connection->query($sql);
+            if ($result) {
+                $id = mysqli_insert_id($connection);
+                foreach ($category as $categoryID) {
+                    $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ($id, $categoryID)";
+                    $connection->query($sql);
+                }
+                if ($_SESSION['permissions'] == 2) {
+                    $output = ob_get_clean();
+                    header('Location: employee_page.php');
+                } else {
+                    $output = ob_get_clean();
+                    header('Location: admin_page.php');
+                }
             }
+        } else {
+            $output = ob_get_clean();
+            header('Location:add_product.php?&error=quantity');
         }
     }
     $connection->close();
