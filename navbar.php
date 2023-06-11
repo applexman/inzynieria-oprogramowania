@@ -30,3 +30,4 @@
         </div>
     </div>
 </nav>
+<?php require_once 'cookie.php' ?>

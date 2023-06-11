@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Cze 2023, 21:30
+-- Czas generowania: 11 Cze 2023, 17:50
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.1.12
 
@@ -162,8 +162,7 @@ INSERT INTO `product_categories` (`id`, `productID`, `categoryID`) VALUES
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 3),
-(4, 4, 2),
-(5, 3, 2);
+(4, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -331,7 +330,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT dla tabeli `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `reviews`
