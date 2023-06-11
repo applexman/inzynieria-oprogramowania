@@ -42,6 +42,19 @@ ob_start();
                 $categories[] = $row;
             }
         }
+        function getProductCategoriesIDs($connection, $productID)
+        {
+            $categoriesIDs = array();
+            $sql = "SELECT categoryID FROM product_categories WHERE productID = $productID";
+            $result = $connection->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $categoriesIDs[] = $row['categoryID'];
+                }
+            }
+            return $categoriesIDs;
+        }
+        $assignedCategories = getProductCategoriesIDs($connection, $id);
         echo
         '<section>
             <div class="container py-5">
@@ -52,16 +65,20 @@ ob_start();
                         <div class="mb-3"><label for="price">Cena</label><input class="form-control" id="price" type="number" min=1 name="price" value="' . $product[0]['price'] . '"></div>
                         <div class="mb-3"><label for="des">Opis</label><textarea class="form-control" id="des" aria-label="With textarea" name="description">' . $product[0]['description'] . '</textarea></div>
                         <div class="mb-3">
+
                         <label for="category">
-                        Kategoria
-                        </label>
-                            <select class="form-select" name="category" id="category">';
-        foreach ($categories as $category) {
-            $selected = ($category['id'] == $product[0]['categoryId']) ? 'selected' : '';
-            echo '<option value="' . $category['id'] . '" ' . $selected . '>' . $category['name'] . '</option>';
-        }
-        echo
-        '</select>
+                        Kategorie:<br>
+                        </label>';
+                        if (isset($_GET['error']) && $_GET['error'] === 'quantity') {
+                            echo '<div class="alert alert-danger" role="alert">Musisz wybrać minimum 1 kategorię!</div>';
+                        }
+                        foreach ($categories as $category) {
+                            $checked = in_array($category['id'], $assignedCategories) ? 'checked' : '';
+                            echo '<div class="form-check"><input type="checkbox" class="form-check-input" id="c' . $category['id'] . '" name="categories[]" value="' . $category['id'] . '" ' . $checked . '><label for="c' . $category['id'] . '">' . $category['name'] . '</label></div>';
+                        }
+
+                        echo
+                        '
                         </div>
                         <div class="mb-3"><label for="quantity">Ilość</label><input class="form-control" type="number" min=1 id="quantity" name="quantity" value="' . $product[0]['quantity'] . '"></div>
                         <div class="m-3"><button class="btn btn-danger shadow d-block w-10 mx-auto d-flex" type="submit" name="delete">Usuń</button></div>
@@ -74,6 +91,8 @@ ob_start();
 
     if (isset($_POST['delete'])) {
         $sql = "DELETE FROM products WHERE id = $id";
+        $connection->query($sql);
+        $sql = "DELETE FROM product_categories WHERE productID=$id";
         $connection->query($sql);
         if ($_SESSION['permissions'] == 2) {
             header('Location: employee_page.php');
@@ -88,20 +107,34 @@ ob_start();
         $name = $_POST['name'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $categoryId = $_POST['category'];
+        $category = $_POST['categories'];
         $quantity = $_POST['quantity'];
-        $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description', quantity='$quantity', categoryId = '$categoryId' WHERE id = $id";
-        $result = $connection->query($sql);
-        if ($result) {
-            if ($_SESSION['permissions'] == 1) {
-                $output = ob_get_clean();
-                header('Location: admin_page.php');
-                exit();
-            } else {
-                $output = ob_get_clean();
-                header('Location: employee_page.php');
-                exit();
+        if (!empty($category)) {
+            $sql = "DELETE FROM product_categories WHERE productID=$id";
+            if ($connection->query($sql)) {
+                foreach ($category as $categoryID) {
+                    $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ($id, $categoryID)";
+                    $connection->query($sql);
+                }
+                $sql = "UPDATE products SET name = '$name', price = '$price', description = '$description', quantity='$quantity' WHERE id = $id";
+                $result = $connection->query($sql);
+                if ($result) {
+                    if ($_SESSION['permissions'] == 1) {
+                        $output = ob_get_clean();
+                        header('Location: admin_page.php');
+                        exit();
+                    } else {
+                        $output = ob_get_clean();
+                        header('Location: employee_page.php');
+                        exit();
+                    }
+                }
             }
+        }
+        else{
+            $output = ob_get_clean();
+            header('Location:edit_product.php?id=' . $id . '&error=quantity');
+            exit();
         }
     }
     $connection->close();
