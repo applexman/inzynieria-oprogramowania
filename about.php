@@ -45,7 +45,7 @@ session_start();
                     </div>
                 </div>
                 <div class="col mb-4">
-                    <div class="text-center"><img class="rounded mb-3 fit-cover" width="150" height="150" src="assets/img/avatars/avatar3.jpg">
+                    <div class="text-center"><img class="rounded mb-3 fit-cover" width="150" height="150" src="assets/img/avatars/team4.jpg">
                         <h5 class="fw-bold mb-0"><strong>Mateusz</strong></h5>
                         <p class="text-muted mb-2">Dyrektor marketingu</p>
                     </div>
