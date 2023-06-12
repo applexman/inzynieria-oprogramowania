@@ -78,18 +78,19 @@ session_start();
                         }
 
                         $products = array();
-                        $sql_products = "SELECT * FROM products
+                        $sql_products = "SELECT products.* , products.name AS product_name FROM products
                         JOIN product_categories  ON products.id = product_categories.productID
                         JOIN categories ON categories.id=product_categories.categoryID";
                         if ($selectedCategory) {
                             $sql_products .= " WHERE product_categories.categoryID = $selectedCategory
-                            GROUP BY products.id
+                            GROUP BY products.id, products.name, products.price, products.img
                             ORDER BY products.id";
                         } else {
                             $sql_products .= "
-                            GROUP BY products.id
+                            GROUP BY products.id, products.name, products.price, products.img
                             ORDER BY products.id";
                         }
+                        
                         $result_products = $connection->query($sql_products);
                         if ($result_products->num_rows > 0) {
                             while ($row_products = $result_products->fetch_assoc()) {
