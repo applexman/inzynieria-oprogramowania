@@ -129,31 +129,31 @@ if (isset($_SESSION['alert_msg'])) {
                         <form class="row g-3 needs-validation" action="order_script.php" method="POST">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Imię</label>
-                                <input type="text" class="form-control" id="name" name="name" value=' . $name . ' required>
+                                <input type="text" class="form-control" id="name" name="name" value="' . $name . '" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="surname" class="form-label">Nazwisko</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value=' . $surname . ' required>
+                                <input type="text" class="form-control" id="surname" name="surname" value="' . $surname . '" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="city" class="form-label">Miejscowość</label>
-                                <input type="text" class="form-control" id="city" name="city" rows="3" value=' . $city . ' required></input>
+                                <input type="text" class="form-control" id="city" name="city" rows="3" value="' . $city . '" required></input>
                             </div>
                             <div class="col-md-4">
                             <label for="street" class="form-label">Ulica</label>
-                            <input type="text" class="form-control" id="street" name="street" rows="3" value=' . $street . ' required></input>
+                            <input type="text" class="form-control" id="street" name="street" rows="3" value="' . $street . '" required></input>
                         </div>
                         <div class="col-md-4">
                             <label for="post" class="form-label">Kod pocztowy</label>
-                            <input type="text" class="form-control" id="post" name="post" rows="3" value=' . $post . ' required></input>
+                            <input type="text" class="form-control" id="post" name="post" rows="3" value="' . $post . '" required></input>
                         </div>
                         <div class="col-md-4">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value=' . $email . ' required>
+                            <input type="email" class="form-control" id="email" name="email" value="' . $email . '" required>
                         </div>
                             <div class="col-md-4">
                                 <label for="phone" class="form-label">Numer telefonu</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" value=' . $phone . ' required>
+                                <input type="tel" class="form-control" id="phone" name="phone" value="' . $phone . '" required>
                             </div>
                             <div class="col-md-4">
                             <label class="form-label">Sposób płatności</label>
