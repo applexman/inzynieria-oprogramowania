@@ -42,7 +42,7 @@ session_start();
                         <div class="fs-5 mb-5">
                             <span><?php echo $product[0]['price']; ?> zł</span>
                         </div>
-                        <p class="lead"><?php echo $product[0]['description']; ?></p>
+                        <p class=""><?php echo $product[0]['description']; ?></p>
                         <?php $average_rating = calculateAverageRating($connection, $product[0]['id']); ?>
                         <p class="lead"><?php echo "Średnia ocena:<b> " . $average_rating ."</b>"; ?></p>
                         <p class="lead"><?php echo "Ilość dostępnych sztuk:<b> " . $product[0]['quantity'] ."</b>"; ?></p>
