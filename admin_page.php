@@ -54,14 +54,20 @@ if ((!isset($_SESSION['permissions'])) || ($_SESSION['permissions'] != 1)) {
 
                         foreach (getUsers($connection) as $user) {
                             $permissions = ($user['permissions'] == 1) ? 'Admin' : (($user['permissions'] == 2) ? 'Pracownik' : 'Klient');
-                            echo
-                            '<tr>
+                            echo '<tr>
                                     <th scope="row">' . $user['id'] . '</th>
                                     <td>' . $user['email'] . '</td>
-                                    <td>' . $permissions . '</td>
-                                    <td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_user.php?id=' . $user['id'] . '">Edytuj</a></td>
-                                </tr>';
+                                    <td>' . $permissions . '</td>';
+                        
+                            if ($user['permissions'] != 1) {
+                                echo '<td><a class="btn btn-outline-danger shadow btn-sm" role="button" href="edit_user.php?id=' . $user['id'] . '">Edytuj</a></td>';
+                            } else {
+                                echo '<td>Nie można edytować Admina</td>';
+                            }
+                        
+                            echo '</tr>';
                         }
+                        
                         ?>
                     </tbody>
                 </table>
